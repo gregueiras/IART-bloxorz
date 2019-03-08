@@ -3,6 +3,6 @@
 enum model
 {
   empty_tile = 0,
-  target = 1,
-  block = 2
+  target_tile = 1,
+  block_tile = 2
 };

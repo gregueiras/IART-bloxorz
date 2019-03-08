@@ -3,17 +3,17 @@
 #include <string>
 #include "model.h"
 
-struct point
+class point
 {
+public:
   int x;
   int y;
 
-  point(const int &x, const int &y)
+  point(const int& x, const int& y)
   {
     this->x = x;
     this->y = y;
   }
-
   point()
   {
     this->x = -1;
@@ -23,25 +23,27 @@ struct point
 
 class node
 {
-  int cost_;
-  std::vector<model> map_;
-  std::vector<point> pos_;
-  point target_;
-
-  std::vector<std::vector<point>> parents_ = {};
-  std::vector<std::string> steps_ = {};
-
-  int cols_;
-  int rows_;
-
 public:
+  int cost;
+  std::vector<model> map;
+  std::vector<point> pos;
+  point target;
+
+  std::vector<std::vector<point>> parents = {};
+  std::vector<std::string> steps = {};
+
+  int cols;
+  int rows;
+
+
   node(const std::vector<int> &initializer, const int &rows, const int &cols);
   ~node();
 
   bool operator<(const node& rhs) const;
-  bool operator==(const node& rhs);
-  bool objective();
+  bool operator==(const node& rhs) const;
+  bool objective() const;
 
   void print();
 };
 
+int get_index(const int &x, const int &y, const int &cols);

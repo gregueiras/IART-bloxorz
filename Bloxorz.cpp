@@ -2,19 +2,31 @@
 //
 
 #include "node.h"
+#include "operators.h"
+#include <iostream>
 
 #define LVL1 { \
   0, 0, 0, 0, 0, 0, 0, \
-  0, 2, 0, 0, 0, 0, 0, \
-  0, 2, 0, 1, 0, 0, 0, \
+  0, 2, 2, 0, 0, 0, 0, \
+  0, 0, 0, 1, 0, 0, 0, \
   0, 0, 0, 0, 0, 0, 0, \
   0, 0, 0, 0, 0, 0, 0 \
+}
+
+int inc(const node& node) //TEST
+{
+  return node.cost + 1;
 }
 
 int main()
 {
   node initial(LVL1, 5, 7);
   initial.print();
+
+  std::cout << std::endl << std::endl;
+
+  auto sec = roll_up(initial, inc);
+  sec.print();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
