@@ -1,20 +1,19 @@
 // Bloxorz.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include <iostream>
 #include "node.h"
 
 #define LVL1 { \
-  0, 0, 0, 0, 0, \
-  0, 2, 0, 0, 0, \
-  0, 2, 0, 1, 0, \
-  0, 0, 0, 0, 0, \
-  0, 0, 0, 0, 0, \
+  0, 0, 0, 0, 0, 0, 0, \
+  0, 2, 0, 0, 0, 0, 0, \
+  0, 2, 0, 1, 0, 0, 0, \
+  0, 0, 0, 0, 0, 0, 0, \
+  0, 0, 0, 0, 0, 0, 0 \
 }
 
 int main()
 {
-  node initial(LVL1, 5, 5);
+  node initial(LVL1, 5, 7);
   initial.print();
 }
 

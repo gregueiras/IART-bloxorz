@@ -9,6 +9,7 @@ node::node(const std::vector<int> &initializer, const int &rows, const int &cols
   this->pos_ = {};
   this->map_ = {};
   this->cols_ = cols;
+  this->rows_ = rows;
 
   const int length = initializer.size();
   if (length != rows * cols)

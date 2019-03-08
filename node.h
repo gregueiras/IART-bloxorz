@@ -32,6 +32,7 @@ class node
   std::vector<std::string> steps_ = {};
 
   int cols_;
+  int rows_;
 
 public:
   node(const std::vector<int> &initializer, const int &rows, const int &cols);
