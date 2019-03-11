@@ -8,32 +8,32 @@
 #define LVL1 { \
   0, 0, 0, 0, 0, 0, 0, \
   0, 0, 0, 0, 0, 0, 0, \
-  0, 0, 2, 1, 0, 0, 0, \
-  0, 0, 2, 0, 0, 0, 0, \
+  0, 2, 2, 1, 0, 0, 0, \
+  0, 0, 0, 0, 0, 0, 0, \
   0, 0, 0, 0, 0, 0, 0 \
 }
 
 int inc(const node& node) //TEST
 {
-  return node.cost + 1;
+	return node.cost + 1;
 }
 
 int main()
 {
-  node initial(LVL1, 5, 7);
-  auto second = roll_down(initial, inc);
-  auto third = roll_down(second, inc);
-  
+	node initial(LVL1, 5, 7);
+	auto second = roll_down(initial, inc);
+	auto third = roll_up(second, inc);
 
 
-  initial.print();
-  std::cout << std::endl << std::endl;
-  second.print();
-  std::cout << std::endl << std::endl;
-  third.print();
 
-  std::cout << std::endl << initial.cost << std::endl << second.cost << std::endl <<
-    third.cost << std::endl;
+	initial.print();
+	std::cout << std::endl << std::endl;
+	second.print();
+	std::cout << std::endl << std::endl;
+	third.print();
+
+	std::cout << std::endl << initial.cost << std::endl << second.cost << std::endl <<
+		third.cost << std::endl;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
