@@ -15,3 +15,7 @@ node roll_right(node state, cost_function cost);
 node sideways_up(node& state, const cost_function cost, const int x1, const int y1, const int x2, const int y2);
 node forewards_up(node& state, const cost_function cost, const int x1, const int y1, const int x2, const int y2, const int min_y);
 node standing_up(node& state, const cost_function cost, const int x, const int y);
+
+node sideways_down(node& state, const cost_function cost, const int x1, const int y1, const int x2, const int y2);
+node forewards_down(node& state, const cost_function cost, const int x1, const int y1, const int x2, const int y2, const int min_y);
+node standing_down(node& state, const cost_function cost, const int x, const int y);
