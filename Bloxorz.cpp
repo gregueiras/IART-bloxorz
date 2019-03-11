@@ -8,8 +8,8 @@
 #define LVL1 { \
   0, 0, 0, 0, 0, 0, 0, \
   0, 0, 0, 0, 0, 0, 0, \
-  0, 2, 2, 1, 0, 0, 0, \
-  0, 0, 0, 0, 0, 0, 0, \
+  0, 0, 0, 1, 0, 0, 0, \
+  0, 0, 0, 0, 0, 2, 2, \
   0, 0, 0, 0, 0, 0, 0 \
 }
 
@@ -22,7 +22,7 @@ int main()
 {
 	node initial(LVL1, 5, 7);
 	auto second = roll_down(initial, inc);
-	auto third = roll_up(second, inc);
+	auto third = roll_left(second, inc);
 
 
 
