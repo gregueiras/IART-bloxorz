@@ -95,7 +95,7 @@ node roll_left(node state, cost_function cost) {
 		if (sideways && x1 > 0) {
 			return forewards_move(state, cost, x1, y1, x2, y2, min_x, y1, -1, 0);
 		}
-		if (forewards && min_x > 1) {
+		if (forewards && min_x > 0) {
 			return sideways_move(state, cost, x1, y1, x2, y2, -1, 0);
 		}
 	}
@@ -133,7 +133,7 @@ node roll_right(node state, cost_function cost) {
 		if (sideways && x1 < state.cols - 1) {
 			return forewards_move(state, cost, x1, y1, x2, y2, max_x, y1, 1, 0);
 		}
-		if (forewards && max_x < state.cols - 2) {
+		if (forewards && max_x < state.cols - 1) {
 			return sideways_move(state, cost, x1, y1, x2, y2, 1, 0);
 		}
 	}

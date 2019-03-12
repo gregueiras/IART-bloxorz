@@ -9,7 +9,7 @@
   0, 0, 0, 0, 0, 0, 0, \
   0, 0, 0, 0, 0, 0, 0, \
   0, 0, 0, 1, 0, 0, 0, \
-  0, 0, 0, 0, 0, 2, 2, \
+  0, 0, 0, 0, 2, 2, 0, \
   0, 0, 0, 0, 0, 0, 0 \
 }
 
@@ -21,7 +21,7 @@ int inc(const node& node) //TEST
 int main()
 {
 	node initial(LVL1, 5, 7);
-	auto second = roll_down(initial, inc);
+	auto second = roll_up(initial, inc);
 	auto third = roll_left(second, inc);
 
 
