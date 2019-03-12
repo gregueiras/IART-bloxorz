@@ -163,7 +163,7 @@ node roll_right(node state, cost_function cost) {
 		const auto x = pos.at(0).x;
 		const auto y = pos.at(0).y;
 
-		if (y < state.cols - 2) {
+		if (x < state.cols - 2) {
 			auto res = standing_move(state, cost, x, y, 1,0);
       res.steps.emplace_back(__func__);
       return res;
