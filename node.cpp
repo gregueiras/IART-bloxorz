@@ -50,8 +50,21 @@ node::node(const std::vector<int> &initializer, const int &rows, const int &cols
 node::~node()
 = default;
 
-void node::print()
+bool node::operator<(const node& rhs) const
+{ return this->cost > rhs.cost; }
+
+bool node::objective() const {
+  return this->pos.size() == 1 && this->pos.at(0) == this->target;
+}
+
+void node::print() const
 {
+  for (auto point : this->pos)
+  {
+    std::cout << "X: " << point.x << "\tY: " << point.y << std::endl;
+  }
+  std::cout << "Target X: " << this->target.x << "\tY: " << this->target.y << std::endl;
+  
   auto i = 0;
   for (auto tile : this->map)
   {
@@ -73,4 +86,17 @@ void node::print()
 int get_index(const int& x, const int& y, const int &cols)
 {
   return x + y * cols;
+}
+
+std::ostream &operator<<(std::ostream &os, const point &point) {
+  os << "X: " << point.x << "\tY: " << point.y;
+  return os;
+}
+
+std::ostream &operator<<(std::ostream &os, const node &node) {
+  for (std::string step : node.steps)
+  {
+    os << step << "\t";
+  }
+  return os;
 }

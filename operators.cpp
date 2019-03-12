@@ -17,10 +17,14 @@ node roll_up(node state, const cost_function cost) {
     const auto min_y = std::min(y1, y2);
 
     if (sideways && y1 > 0) {
-      return sideways_move(state, cost, x1, y1, x2, y2, 0,-1);
+      auto res = sideways_move(state, cost, x1, y1, x2, y2, 0,-1);
+      res.steps.emplace_back(__func__);
+      return res;
     }
     if (forewards && min_y > 0) {
-      return forewards_move(state, cost, x1, y1, x2, y2, x1, min_y,0, -1);
+      auto res = forewards_move(state, cost, x1, y1, x2, y2, x1, min_y,0, -1);
+      res.steps.emplace_back(__func__);
+      return res;
     }
 
   } else if (pos.size() == 1) {
@@ -28,7 +32,9 @@ node roll_up(node state, const cost_function cost) {
     const auto y = pos.at(0).y;
 
     if (y > 1) {
-      return standing_move(state, cost, x, y, 0,-1);
+      auto res = standing_move(state, cost, x, y, 0,-1);
+      res.steps.emplace_back(__func__);
+      return res;
     }
     // Would go off the map
     throw std::logic_error("Invalid Move");
@@ -55,10 +61,14 @@ node roll_down(node state, cost_function cost) {
 		const auto max_y = std::max(y1, y2);
 
 		if (sideways && y1 < state.rows-1) {
-			return sideways_move(state, cost, x1, y1, x2, y2,0, 1);
+			auto res = sideways_move(state, cost, x1, y1, x2, y2,0, 1);
+      res.steps.emplace_back(__func__);
+      return res;
 		}
 		if (forewards && max_y < state.rows -2) {
-			return forewards_move(state, cost, x1, y1, x2, y2, x1, max_y,0,1);
+			auto res = forewards_move(state, cost, x1, y1, x2, y2, x1, max_y,0,1);
+      res.steps.emplace_back(__func__);
+      return res;
 		}
 	}
 	else if (pos.size() == 1) {
@@ -66,7 +76,9 @@ node roll_down(node state, cost_function cost) {
 		const auto y = pos.at(0).y;
 
 		if (y < state.rows - 2) {
-			return standing_move(state, cost, x, y,0, 1);
+			auto res = standing_move(state, cost, x, y,0, 1);
+      res.steps.emplace_back(__func__);
+      return res;
 		}
 		// Would go off the map
 		throw std::logic_error("Invalid Move");
@@ -92,11 +104,15 @@ node roll_left(node state, cost_function cost) {
 		const auto forewards = x1 == x2;  // "Vertical"
 		const auto min_x = std::min(x1, x2);
 
-		if (sideways && x1 > 0) {
-			return forewards_move(state, cost, x1, y1, x2, y2, min_x, y1, -1, 0);
+		if (sideways && min_x > 0) {
+			auto res = forewards_move(state, cost, x1, y1, x2, y2, min_x, y1, -1, 0);
+      res.steps.emplace_back(__func__);
+      return res;
 		}
-		if (forewards && min_x > 0) {
-			return sideways_move(state, cost, x1, y1, x2, y2, -1, 0);
+		if (forewards && x1 > 0) {
+			auto res = sideways_move(state, cost, x1, y1, x2, y2, -1, 0);
+      res.steps.emplace_back(__func__);
+      return res;
 		}
 	}
 	else if (pos.size() == 1) {
@@ -104,7 +120,9 @@ node roll_left(node state, cost_function cost) {
 		const auto y = pos.at(0).y;
 
 		if (x > 1) {
-			return standing_move(state, cost, x, y, -1, 0);
+			auto res = standing_move(state, cost, x, y, -1, 0);
+      res.steps.emplace_back(__func__);
+      return res;
 		}
 		// Would go off the map
 		throw std::logic_error("Invalid Move");
@@ -130,19 +148,25 @@ node roll_right(node state, cost_function cost) {
 		const auto forewards = x1 == x2;  // "Vertical"
 		const auto max_x = std::max(x1, x2);
 
-		if (sideways && x1 < state.cols - 1) {
-			return forewards_move(state, cost, x1, y1, x2, y2, max_x, y1, 1, 0);
+		if (sideways && max_x < state.cols - 1) {
+			auto res = forewards_move(state, cost, x1, y1, x2, y2, max_x, y1, 1, 0);
+      res.steps.emplace_back(__func__);
+      return res;
 		}
-		if (forewards && max_x < state.cols - 1) {
-			return sideways_move(state, cost, x1, y1, x2, y2, 1, 0);
-		}
+		if (forewards && x1 < state.cols - 1) {
+      auto res = sideways_move(state, cost, x1, y1, x2, y2, 1, 0);
+      res.steps.emplace_back(__func__);
+      return res;
+    }
 	}
 	else if (pos.size() == 1) {
 		const auto x = pos.at(0).x;
 		const auto y = pos.at(0).y;
 
 		if (y < state.cols - 2) {
-			return standing_move(state, cost, x, y, 1,0);
+			auto res = standing_move(state, cost, x, y, 1,0);
+      res.steps.emplace_back(__func__);
+      return res;
 		}
 		// Would go off the map
 		throw std::logic_error("Invalid Move");
