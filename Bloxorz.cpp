@@ -31,7 +31,7 @@ int main() {
     std::cout << "HEY";
     }
   */
-  auto r = runner(bfs, LVL1, LVL1_R, LVL1_C);
+  auto r = runner(greedy, manhattan_distance, LVL1, LVL1_R, LVL1_C);
   auto sol = r.run(100);
 
   std::cout << sol << std::endl << std::endl << "TIME*100: " << sol << std::endl;
@@ -42,7 +42,6 @@ int main() {
   std::cout << "TIME*100: " << sol << std::endl;
     
   }
-
   
 }
 

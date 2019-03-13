@@ -30,7 +30,7 @@ class point {
 
 class node {
  public:
-  int cost;
+  double cost;
   std::vector<model> map;
   std::vector<point> pos;
   point target;

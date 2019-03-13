@@ -1,5 +1,4 @@
 #pragma once
-#include "strategy.h"
 #include "operators.h"
 #include <queue>
 

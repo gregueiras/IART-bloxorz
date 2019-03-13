@@ -1,8 +1,11 @@
 #include "operators.h"
 #include <algorithm>
 #include <stdexcept>
+#include <stdlib.h>     /* abs */
+#include <math.h>       /* sqrt */
 
-node roll_up(node state, const cost_function cost) {
+
+node roll_up(node state, const cost_function cost, heuristic heuristic_) {
   auto pos = state.pos;
 
   if (pos.size() == 2) {
@@ -17,12 +20,12 @@ node roll_up(node state, const cost_function cost) {
     const auto min_y = std::min(y1, y2);
 
     if (sideways && y1 > 0) {
-      auto res = sideways_move(state, cost, x1, y1, x2, y2, 0,-1);
+      auto res = sideways_move(state, cost, heuristic_, x1, y1, x2, y2, 0,-1);
       res.steps.emplace_back(__func__);
       return res;
     }
     if (forewards && min_y > 0) {
-      auto res = forewards_move(state, cost, x1, y1, x2, y2, x1, min_y,0, -1);
+      auto res = forewards_move(state, cost, heuristic_, x1, y1, x2, y2, x1, min_y,0, -1);
       res.steps.emplace_back(__func__);
       return res;
     }
@@ -32,7 +35,7 @@ node roll_up(node state, const cost_function cost) {
     const auto y = pos.at(0).y;
 
     if (y > 1) {
-      auto res = standing_move(state, cost, x, y, 0,-1);
+      auto res = standing_move(state, cost, heuristic_, x, y, 0,-1);
       res.steps.emplace_back(__func__);
       return res;
     }
@@ -46,7 +49,7 @@ node roll_up(node state, const cost_function cost) {
   throw std::logic_error("Invalid Move");
 }
 
-node roll_down(node state, cost_function cost) {
+node roll_down(node state, cost_function cost, heuristic heuristic_) {
 	auto pos = state.pos;
 
 	if (pos.size() == 2) {
@@ -61,12 +64,12 @@ node roll_down(node state, cost_function cost) {
 		const auto max_y = std::max(y1, y2);
 
 		if (sideways && y1 < state.rows-1) {
-			auto res = sideways_move(state, cost, x1, y1, x2, y2,0, 1);
+			auto res = sideways_move(state, cost, heuristic_, x1, y1, x2, y2,0, 1);
       res.steps.emplace_back(__func__);
       return res;
 		}
 		if (forewards && max_y < state.rows -2) {
-			auto res = forewards_move(state, cost, x1, y1, x2, y2, x1, max_y,0,1);
+			auto res = forewards_move(state, cost, heuristic_, x1, y1, x2, y2, x1, max_y,0,1);
       res.steps.emplace_back(__func__);
       return res;
 		}
@@ -76,7 +79,7 @@ node roll_down(node state, cost_function cost) {
 		const auto y = pos.at(0).y;
 
 		if (y < state.rows - 2) {
-			auto res = standing_move(state, cost, x, y,0, 1);
+			auto res = standing_move(state, cost, heuristic_, x, y,0, 1);
       res.steps.emplace_back(__func__);
       return res;
 		}
@@ -90,7 +93,7 @@ node roll_down(node state, cost_function cost) {
 	throw std::logic_error("Invalid Move");
 }
 
-node roll_left(node state, cost_function cost) {
+node roll_left(node state, cost_function cost, heuristic heuristic_) {
 	auto pos = state.pos;
 
 	if (pos.size() == 2) {
@@ -105,12 +108,12 @@ node roll_left(node state, cost_function cost) {
 		const auto min_x = std::min(x1, x2);
 
 		if (sideways && min_x > 0) {
-			auto res = forewards_move(state, cost, x1, y1, x2, y2, min_x, y1, -1, 0);
+			auto res = forewards_move(state, cost, heuristic_, x1, y1, x2, y2, min_x, y1, -1, 0);
       res.steps.emplace_back(__func__);
       return res;
 		}
 		if (forewards && x1 > 0) {
-			auto res = sideways_move(state, cost, x1, y1, x2, y2, -1, 0);
+			auto res = sideways_move(state, cost, heuristic_, x1, y1, x2, y2, -1, 0);
       res.steps.emplace_back(__func__);
       return res;
 		}
@@ -120,7 +123,7 @@ node roll_left(node state, cost_function cost) {
 		const auto y = pos.at(0).y;
 
 		if (x > 1) {
-			auto res = standing_move(state, cost, x, y, -1, 0);
+			auto res = standing_move(state, cost, heuristic_, x, y, -1, 0);
       res.steps.emplace_back(__func__);
       return res;
 		}
@@ -134,7 +137,7 @@ node roll_left(node state, cost_function cost) {
 	throw std::logic_error("Invalid Move");
 }
 
-node roll_right(node state, cost_function cost) {
+node roll_right(node state, cost_function cost, heuristic heuristic_) {
 	auto pos = state.pos;
 
 	if (pos.size() == 2) {
@@ -149,12 +152,12 @@ node roll_right(node state, cost_function cost) {
 		const auto max_x = std::max(x1, x2);
 
 		if (sideways && max_x < state.cols - 1) {
-			auto res = forewards_move(state, cost, x1, y1, x2, y2, max_x, y1, 1, 0);
+			auto res = forewards_move(state, cost, heuristic_, x1, y1, x2, y2, max_x, y1, 1, 0);
       res.steps.emplace_back(__func__);
       return res;
 		}
 		if (forewards && x1 < state.cols - 1) {
-      auto res = sideways_move(state, cost, x1, y1, x2, y2, 1, 0);
+      auto res = sideways_move(state, cost, heuristic_, x1, y1, x2, y2, 1, 0);
       res.steps.emplace_back(__func__);
       return res;
     }
@@ -164,7 +167,7 @@ node roll_right(node state, cost_function cost) {
 		const auto y = pos.at(0).y;
 
 		if (x < state.cols - 2) {
-			auto res = standing_move(state, cost, x, y, 1,0);
+			auto res = standing_move(state, cost, heuristic_, x, y, 1,0);
       res.steps.emplace_back(__func__);
       return res;
 		}
@@ -180,7 +183,7 @@ node roll_right(node state, cost_function cost) {
 
 
 
-node standing_move(node& state, const cost_function cost, const int x,
+node standing_move(node& state, const cost_function cost, heuristic heuristic_,const int x,
                  const int y, const int direction_x, const int direction_y) {
   // Calculate new position
   const auto new_x1 = x + 2*direction_x;
@@ -202,12 +205,12 @@ node standing_move(node& state, const cost_function cost, const int x,
   state.pos = {point(new_x1, new_y1), point(new_x2, new_y2)};
 
   // Update cost
-  state.cost = cost(state);
+  state.cost = cost(state, heuristic_);
 
   return state;
 }
 
-node sideways_move(node& state, const cost_function cost, const int x1,
+node sideways_move(node& state, const cost_function cost, heuristic heuristic_, const int x1,
 	const int y1, const int x2, const int y2, const int direction_x, const int direction_y) {
 	// Calculate new position
 	const auto new_x1 = x1 + 1*direction_x;
@@ -229,13 +232,13 @@ node sideways_move(node& state, const cost_function cost, const int x1,
 	state.pos = { point(new_x1, new_y1), point(new_x2, new_y2) };
 
 	// Update cost
-	state.cost = cost(state);
+	state.cost = cost(state, heuristic_);
 
 	return state;
 }
 
 
-node forewards_move(node& state, const cost_function cost, const int x1,
+node forewards_move(node& state, const cost_function cost, heuristic heuristic_,const int x1,
 	const int y1, const int x2, const int y2, const int m_x, const int m_y, const int direction_x, const int direction_y) {
 	// Calculate new position
 	const auto new_x = m_x + 1 * direction_x;  // x1
@@ -255,7 +258,8 @@ node forewards_move(node& state, const cost_function cost, const int x1,
 	state.pos = { point(new_x, new_y) };
 
 	// Update cost
-	state.cost = cost(state);
+	state.cost = cost(state, heuristic_);
 
 	return state;
 }
+

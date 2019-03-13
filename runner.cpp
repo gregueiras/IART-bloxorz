@@ -3,6 +3,7 @@
 #include "levels.h"
 #include <chrono>
 
+
 node runner::find_solution(bool output, int limit) {
   std::priority_queue<node> queue;
   node initial(this->map_, this->rows_, this->cols_);
@@ -16,7 +17,7 @@ node runner::find_solution(bool output, int limit) {
 
     for (auto& op : this->ops_) {
       try {
-        auto child = op(no, this->cost_);
+        auto child = op(no, this->cost_, this->heuristic_);
 
         auto conditions = false;
 
