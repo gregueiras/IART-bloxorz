@@ -32,9 +32,17 @@ int main() {
     }
   */
   auto r = runner(bfs, LVL1, LVL1_R, LVL1_C);
-  auto sol = r.run();
+  auto sol = r.run(100);
 
-  std::cout << sol << std::endl << std::endl << "COST: " << sol.cost << std::endl;
+  std::cout << sol << std::endl << std::endl << "TIME*100: " << sol << std::endl;
+
+  for (auto i = 0; i < 10; ++i)
+  {
+  sol = r.run(50);
+  std::cout << "TIME*100: " << sol << std::endl;
+    
+  }
+
   
 }
 

@@ -19,7 +19,7 @@ class runner {
 
  public:
 
-  node run();
+  long long run(int i);
 
   runner();
   runner(mode mode, const std::vector<int>& map, int rows, int cols);
