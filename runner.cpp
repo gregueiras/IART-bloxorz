@@ -98,7 +98,6 @@ runner::runner(const mode mode, const std::vector<int>& map, const int rows,
 	  break;
   default:
 	  break;
-
   }
 }
 
