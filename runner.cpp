@@ -82,6 +82,24 @@ runner::runner(const mode mode, const std::vector<int>& map, const int rows,
   this->map_ = map;
   this->cols_ = cols;
   this->rows_ = rows;
+  switch(mode) {
+  case bfs:
+  case iterative :
+	  this->cost_ = dec;
+	  break;
+  case dfs:
+	  this->cost_ = inc;
+	  break;
+  case greedy :
+	  this->cost_ = greedy_;
+	  break;
+  case a_star :
+	  this->cost_ = a_star_;
+	  break;
+  default:
+	  break;
+
+  }
 }
 
 runner::runner(const mode mode, const heuristic heuristic,
