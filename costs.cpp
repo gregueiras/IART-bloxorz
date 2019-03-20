@@ -60,6 +60,7 @@ const double heuristic_euclidian_distance(const node &node)
 	}
 }
 
+//devia atirar uma excepçao no caso de default provavelmente
 const double heuristic_func(const node &node, heuristic heuristic_)
 {
 	switch (heuristic_)

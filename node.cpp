@@ -42,6 +42,10 @@ node::node(const std::vector<int> &initializer, const int &rows, const int &cols
     {
       this->map.emplace_back(empty_tile);
     }
+     else if (elem == invalid_tile)
+    {
+      this->map.emplace_back(invalid_tile);
+    }
   }
 
 }
@@ -75,6 +79,7 @@ void node::print() const
       case empty_tile: c = 'O';  break;
       case target_tile: c = 'T';  break;
       case block_tile: c = 'M'; break;
+	  case invalid_tile: c = 'X'; break;
       default: c = 'O';
     }
 

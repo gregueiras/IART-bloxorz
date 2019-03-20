@@ -17,8 +17,9 @@ class runner {
   node find_solution(bool output, int limit);
 
  public:
-
-  long long run(int i);
+	 //corre o (2)
+	 node run();
+  //long long run(int i);
 
   runner();
   runner(mode mode, const std::vector<int>& map, int rows, int cols);

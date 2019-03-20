@@ -51,7 +51,10 @@ node runner::find_solution(bool output, int limit) {
   throw std::exception("NO MORE NODES");
 }
 
-long long runner::run(const int i)
+//CORRE (2)
+node runner::run() { return find_solution(true, NULL); }
+
+/*long long runner::run(const int i)
 {
   const auto begin =
       std::chrono::steady_clock::now();
@@ -63,7 +66,7 @@ long long runner::run(const int i)
   const auto end = std::chrono::steady_clock::now();
   
   return std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
-}
+}*/
 
 runner::runner() {
   this->ops_ = {roll_up, roll_down, roll_left, roll_right};

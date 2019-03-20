@@ -11,10 +11,11 @@
 int main() {
   
   /*
+  corre "manualmente" sem runner -> testar cenas das posicoes
   node initial(LVL1, 5, 7);
-  auto second = roll_right(initial, inc);
-  auto third = roll_left(second, inc);
-  auto fourth = roll_right(third, inc);
+  auto second = roll_up(initial, inc, manhattan_distance);
+  auto third = roll_left(second, inc, manhattan_distance);
+  auto fourth = roll_left(third, inc, manhattan_distance);
 
   initial.print();
   std::cout << std::endl << std::endl;
@@ -25,12 +26,20 @@ int main() {
   fourth.print();
 
   std::cout << std::endl << initial.cost << std::endl << second.cost <<
-   std::endl << third.cost << std::endl;
-
+   std::endl << third.cost << std::endl;*/
+  /* nao sei o que isto e
   if (third.objective()) {
     std::cout << "HEY";
-    }
-  */
+    }*/
+
+	// mostra as posiçoes util para ver se esta a correr o caminho certo (2)
+	auto r = runner(a_star, manhattan_distance, LVL1, LVL1_R, LVL1_C);
+	auto sol = r.run();
+
+	std::cout << sol << std::endl << std::endl << "COST: " << sol.cost << std::endl;
+
+
+  /* corre x vezes -> versao final provavelmente
   auto r = runner(a_star, manhattan_distance, LVL1, LVL1_R, LVL1_C);
   auto sol = r.run(100);
 
@@ -41,7 +50,7 @@ int main() {
   sol = r.run(50);
   std::cout << "TIME*100: " << sol << std::endl;
     
-  }
+  }*/
   
 }
 

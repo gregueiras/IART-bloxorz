@@ -197,15 +197,21 @@ node standing_move(node& state, const cost_function cost, heuristic heuristic_,c
   const auto new_index1 = get_index(new_x1, new_y1, state.cols);
   const auto new_index2 = get_index(new_x2, new_y2, state.cols);
 
-  state.map[index] = empty_tile;  // TODO: Restore original tile
-  state.map[new_index1] = block_tile;
-  state.map[new_index2] = block_tile;
 
-  // Update position
-  state.pos = {point(new_x1, new_y1), point(new_x2, new_y2)};
+  if (state.map[new_index1] != invalid_tile && state.map[new_index2] != invalid_tile)
+  {
+	  state.map[index] = empty_tile;  // TODO: Restore original tile
+	  state.map[new_index1] = block_tile;
+	  state.map[new_index2] = block_tile;
 
-  // Update cost
-  state.cost = cost(state, heuristic_);
+	  // Update position
+	  state.pos = { point(new_x1, new_y1), point(new_x2, new_y2) };
+
+	  // Update cost
+	  state.cost = cost(state, heuristic_);
+  }
+  else
+	  throw std::invalid_argument("invalid tile");
 
   return state;
 }
@@ -225,14 +231,20 @@ node sideways_move(node& state, const cost_function cost, heuristic heuristic_, 
 	const auto new_index1 = get_index(new_x1, new_y1, state.cols);
 	const auto new_index2 = get_index(new_x2, new_y2, state.cols);
 
-	std::swap(state.map[index1], state.map[new_index1]);
-	std::swap(state.map[index2], state.map[new_index2]);
+	if (state.map[new_index1] != invalid_tile && state.map[new_index2] != invalid_tile)
+	{
 
-	// Update position
-	state.pos = { point(new_x1, new_y1), point(new_x2, new_y2) };
+		std::swap(state.map[index1], state.map[new_index1]);
+		std::swap(state.map[index2], state.map[new_index2]);
 
-	// Update cost
-	state.cost = cost(state, heuristic_);
+		// Update position
+		state.pos = { point(new_x1, new_y1), point(new_x2, new_y2) };
+
+		// Update cost
+		state.cost = cost(state, heuristic_);
+	}
+	else
+		throw std::invalid_argument("invalid tile");
 
 	return state;
 }
@@ -250,15 +262,22 @@ node forewards_move(node& state, const cost_function cost, heuristic heuristic_,
 
 	const auto new_index = get_index(new_x, new_y, state.cols);
 
-	state.map[index1] = empty_tile;  // TODO: Restore original tile
-	state.map[index2] = empty_tile;
-	state.map[new_index] = block_tile;
+	if (state.map[new_index] != invalid_tile)
+	{
 
-	// Update position
-	state.pos = { point(new_x, new_y) };
+		state.map[index1] = empty_tile;  // TODO: Restore original tile
+		state.map[index2] = empty_tile;
+		state.map[new_index] = block_tile;
 
-	// Update cost
-	state.cost = cost(state, heuristic_);
+		// Update position
+		state.pos = { point(new_x, new_y) };
+
+		// Update cost
+		state.cost = cost(state, heuristic_);
+	}
+	else
+		throw std::invalid_argument("invalid tile");
+
 
 	return state;
 }
