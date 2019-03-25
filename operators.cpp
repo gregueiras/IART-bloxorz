@@ -67,7 +67,7 @@ node roll_down(node state, cost_function cost, heuristic heuristic_) {
       res.steps.emplace_back(__func__);
       return res;
 		}
-		if (forewards && max_y < state.rows -2) {
+		if (forewards && max_y < state.rows -1) {
 			auto res = forewards_move(state, cost, heuristic_, x1, y1, x2, y2, x1, max_y,0,1);
       res.steps.emplace_back(__func__);
       return res;
@@ -252,7 +252,7 @@ node forewards_move(node& state, const cost_function cost, heuristic heuristic_,
 	const int y1, const int x2, const int y2, const int m_x, const int m_y, const int direction_x, const int direction_y) {
 	// Calculate new position
 	 auto new_x = m_x + 1 * direction_x;  // x1
-	 auto new_y = m_y + 1*direction_y;  //y1
+	 auto new_y = m_y + 1 * direction_y;  //y1
 
 	// Update Map
 	const auto index1 = get_index(x1, y1, state.cols);
@@ -262,8 +262,25 @@ node forewards_move(node& state, const cost_function cost, heuristic heuristic_,
 
 	if (state.map[new_index] != invalid_tile)
 	{
+		 if (state.map[new_index] == push_tile) 
+		 {
+			 const auto tmp_x = new_x + 1 * direction_x;
+			 const auto tmp_y = new_y + 1 * direction_y;
+
+			 if (tmp_x >= 0 && tmp_x < state.cols && tmp_y >= 0 && tmp_y < state.rows)
+			 {
+				 auto new_pos_index = get_index(tmp_x, tmp_y, state.cols);
+				 if (state.map[new_pos_index] != invalid_tile)
+				 {
+					 new_x = tmp_x;
+					 new_y = tmp_y;
+					 new_index = new_pos_index;
+				 }
+			 }
+		}
 		if (state.map[new_index] == teletransport_tile_1 || state.map[new_index] == teletransport_tile_2 || state.map[new_index] == teletransport_tile_3 || state.map[new_index] == teletransport_tile_4)
 		{
+			//TODO mandar excecao aqui se nao existir (acho melhor)
 			const auto new_tile = state.teletransport_tiles[state.map[new_index] * -1];
 			new_x = new_tile.x;
 			new_y = new_tile.y;

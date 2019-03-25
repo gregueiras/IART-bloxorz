@@ -26,7 +26,6 @@ node::node(const std::vector<int> &initializer, const int &rows, const int &cols
     {
       this->pos.push_back(p);
       this->map.emplace_back(block_tile);
-      
     }
     else if (elem == target_tile)
     {
@@ -60,6 +59,10 @@ node::node(const std::vector<int> &initializer, const int &rows, const int &cols
 	{
 		this->teletransport_tiles[teletransport_tile_4] = p;
 		this->map.emplace_back(teletransport_tile_4);
+	}
+	else if (elem == push_tile)
+	{
+		this->map.emplace_back(push_tile);
 	}
   }
 }
@@ -96,6 +99,7 @@ void node::print() const
 	  case invalid_tile: c = 'X'; break;
 	  case teletransport_tile_1: case teletransport_tile_2: c = 'S'; break;
 	  case teletransport_tile_3: case teletransport_tile_4: c = 'R'; break;
+	  case push_tile: c = 'P'; break;
       default: c = 'O';
     }
 

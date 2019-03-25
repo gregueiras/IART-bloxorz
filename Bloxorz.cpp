@@ -10,12 +10,12 @@
 
 int main() {
   
-  
+ /*
 //  corre "manualmente" sem runner -> testar cenas das posicoes
   node initial(LVL1, 5, 7);
-  auto second = roll_left(initial, inc, manhattan_distance);
-  auto third = roll_up(second, inc, manhattan_distance);
-  auto fourth = roll_up(third, inc, manhattan_distance);
+  auto second = roll_down(initial, inc, manhattan_distance);
+  auto third = roll_down(second, inc, manhattan_distance);
+  auto fourth = roll_down(third, inc, manhattan_distance);
 
   initial.print();
   std::cout << std::endl << std::endl;
@@ -26,18 +26,19 @@ int main() {
   fourth.print();
 
   std::cout << std::endl << initial.cost << std::endl << second.cost <<
-   std::endl << third.cost << std::endl;
+   std::endl << third.cost << std::endl;*/
+
   /* nao sei o que isto e
   if (third.objective()) {
     std::cout << "HEY";
     }*/
-  /*
+  
 	// mostra as posiçoes util para ver se esta a correr o caminho certo (2)
 	auto r = runner(a_star, manhattan_distance, LVL1, LVL1_R, LVL1_C);
 	auto sol = r.run();
 
 	std::cout << sol << std::endl << std::endl << "COST: " << sol.cost << std::endl;
-	*/
+	
 
   /* corre x vezes -> versao final provavelmente
   auto r = runner(a_star, manhattan_distance, LVL1, LVL1_R, LVL1_C);
