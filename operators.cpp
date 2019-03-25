@@ -4,7 +4,6 @@
 #include <stdlib.h>     /* abs */
 #include <math.h>       /* sqrt */
 
-
 node roll_up(node state, const cost_function cost, heuristic heuristic_) {
   auto pos = state.pos;
 
@@ -233,7 +232,6 @@ node sideways_move(node& state, const cost_function cost, heuristic heuristic_, 
 
 	if (state.map[new_index1] != invalid_tile && state.map[new_index2] != invalid_tile)
 	{
-
 		std::swap(state.map[index1], state.map[new_index1]);
 		std::swap(state.map[index2], state.map[new_index2]);
 
@@ -253,18 +251,25 @@ node sideways_move(node& state, const cost_function cost, heuristic heuristic_, 
 node forewards_move(node& state, const cost_function cost, heuristic heuristic_,const int x1,
 	const int y1, const int x2, const int y2, const int m_x, const int m_y, const int direction_x, const int direction_y) {
 	// Calculate new position
-	const auto new_x = m_x + 1 * direction_x;  // x1
-	const auto new_y = m_y + 1*direction_y;  //y1
+	 auto new_x = m_x + 1 * direction_x;  // x1
+	 auto new_y = m_y + 1*direction_y;  //y1
 
 	// Update Map
 	const auto index1 = get_index(x1, y1, state.cols);
 	const auto index2 = get_index(x2, y2, state.cols);
 
-	const auto new_index = get_index(new_x, new_y, state.cols);
+	 auto new_index = get_index(new_x, new_y, state.cols);
 
 	if (state.map[new_index] != invalid_tile)
 	{
-
+		if (state.map[new_index] == teletransport_tile_1 || state.map[new_index] == teletransport_tile_2 || state.map[new_index] == teletransport_tile_3 || state.map[new_index] == teletransport_tile_4)
+		{
+			const auto new_tile = state.teletransport_tiles[state.map[new_index] * -1];
+			new_x = new_tile.x;
+			new_y = new_tile.y;
+			new_index = get_index(new_x, new_y, state.cols);
+		}
+		
 		state.map[index1] = empty_tile;  // TODO: Restore original tile
 		state.map[index2] = empty_tile;
 		state.map[new_index] = block_tile;

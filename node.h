@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "model.h"
+#include <map>
 
 class point {
  public:
@@ -40,6 +41,8 @@ class node {
 
   int cols;
   int rows;
+
+  std::map<int, point> teletransport_tiles;
 
   node(const std::vector<int> &initializer, const int &rows, const int &cols);
   ~node();

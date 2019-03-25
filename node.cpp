@@ -21,33 +21,47 @@ node::node(const std::vector<int> &initializer, const int &rows, const int &cols
   for (auto i = 0; i < length; ++i)
   {
     const auto elem = initializer[i];
+	const point p(i % cols, i / cols);
     if (elem == block_tile)
     {
-         
-      const point p(i % cols, i / cols);
       this->pos.push_back(p);
       this->map.emplace_back(block_tile);
       
-
     }
     else if (elem == target_tile)
     {
-      
-      const point t(i % cols, i / cols);
-      this->target = t;
+      this->target = p;
       this->map.emplace_back(target_tile);
-      
     } 
     else if (elem == empty_tile)
     {
       this->map.emplace_back(empty_tile);
     }
-     else if (elem == invalid_tile)
+    else if (elem == invalid_tile)
     {
       this->map.emplace_back(invalid_tile);
     }
+	else if (elem == teletransport_tile_1)
+	{
+		this->teletransport_tiles[teletransport_tile_1] = p;
+		this->map.emplace_back(teletransport_tile_1);
+	}
+	else if (elem == teletransport_tile_2)
+	{
+		this->teletransport_tiles[teletransport_tile_2] = p;
+		this->map.emplace_back(teletransport_tile_2);	
+	}
+	else if (elem == teletransport_tile_3)
+	{
+		this->teletransport_tiles[teletransport_tile_3] = p;
+		this->map.emplace_back(teletransport_tile_3);
+	}
+	else if (elem == teletransport_tile_4)
+	{
+		this->teletransport_tiles[teletransport_tile_4] = p;
+		this->map.emplace_back(teletransport_tile_4);
+	}
   }
-
 }
 
 
@@ -80,6 +94,8 @@ void node::print() const
       case target_tile: c = 'T';  break;
       case block_tile: c = 'M'; break;
 	  case invalid_tile: c = 'X'; break;
+	  case teletransport_tile_1: case teletransport_tile_2: c = 'S'; break;
+	  case teletransport_tile_3: case teletransport_tile_4: c = 'R'; break;
       default: c = 'O';
     }
 
