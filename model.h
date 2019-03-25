@@ -10,5 +10,7 @@ enum model
 	teletransport_tile_2 = -3,
 	teletransport_tile_3 = 4,
 	teletransport_tile_4 = -4,
-	push_tile = 5
+	push_tile = 5,
+	closed_tile = 6,
+	door_tile = 7
 };

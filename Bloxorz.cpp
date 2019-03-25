@@ -14,7 +14,7 @@ int main() {
 //  corre "manualmente" sem runner -> testar cenas das posicoes
   node initial(LVL1, 5, 7);
   auto second = roll_down(initial, inc, manhattan_distance);
-  auto third = roll_down(second, inc, manhattan_distance);
+  auto third = roll_up(second, inc, manhattan_distance);
   auto fourth = roll_down(third, inc, manhattan_distance);
 
   initial.print();

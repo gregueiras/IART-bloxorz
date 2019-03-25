@@ -20,3 +20,4 @@ const double heuristic_manhattan_distance(const node &node);
 const double heuristic_euclidian_distance(const node &node);
 
 
+

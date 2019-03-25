@@ -29,6 +29,8 @@ class point {
   friend std::ostream &operator<<(std::ostream &os, const point &point);
 };
 
+
+
 class node {
  public:
   double cost;
@@ -42,7 +44,9 @@ class node {
   int cols;
   int rows;
 
-  std::map<int, point> teletransport_tiles;
+  std::map<int, point> teletransport_tiles = {};
+ 
+  bool closedTiles;
 
   node(const std::vector<int> &initializer, const int &rows, const int &cols);
   ~node();

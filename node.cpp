@@ -11,6 +11,7 @@ node::node(const std::vector<int> &initializer, const int &rows, const int &cols
   this->map = {};
   this->cols = cols;
   this->rows = rows;
+  this->closedTiles = true;
 
   const int length = initializer.size();
   if (length != rows * cols)
@@ -64,6 +65,14 @@ node::node(const std::vector<int> &initializer, const int &rows, const int &cols
 	{
 		this->map.emplace_back(push_tile);
 	}
+	else if (elem == closed_tile)
+	{
+		this->map.emplace_back(closed_tile);
+	}
+	else if (elem == door_tile)
+	{
+		this->map.emplace_back(door_tile);
+	}
   }
 }
 
@@ -100,6 +109,8 @@ void node::print() const
 	  case teletransport_tile_1: case teletransport_tile_2: c = 'S'; break;
 	  case teletransport_tile_3: case teletransport_tile_4: c = 'R'; break;
 	  case push_tile: c = 'P'; break;
+	  case closed_tile: c = 'C'; break;
+	  case door_tile: c = 'D' ; break;
       default: c = 'O';
     }
 
