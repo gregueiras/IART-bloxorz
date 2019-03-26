@@ -18,8 +18,8 @@ class runner {
 
  public:
 	 //corre o (2)
-	 node run();
-  //long long run(int i);
+	// node run();
+  long long run(int i);
 
   runner();
   runner(mode mode, const std::vector<int>& map, int rows, int cols);

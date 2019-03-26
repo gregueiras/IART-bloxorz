@@ -212,6 +212,8 @@ node standing_move(node& state, const cost_function cost, heuristic heuristic_,c
 		  // Update cost
 		  state.cost = cost(state, heuristic_);
 	  }
+	  else
+		  throw std::invalid_argument("closed tile");
 
   }
   else
@@ -249,6 +251,8 @@ node sideways_move(node& state, const cost_function cost, heuristic heuristic_, 
 			// Update cost
 			state.cost = cost(state, heuristic_);
 		}
+		else
+			throw std::invalid_argument("closed tile");
 	}
 	else
 		throw std::invalid_argument("invalid tile");
@@ -313,6 +317,8 @@ node forewards_move(node& state, const cost_function cost, heuristic heuristic_,
 			// Update cost
 			state.cost = cost(state, heuristic_);
 		}
+		else
+			throw std::invalid_argument("closed tile");
 	}
 	else
 		throw std::invalid_argument("invalid tile");
