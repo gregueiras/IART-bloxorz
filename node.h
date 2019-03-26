@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "model.h"
+#include <map>
 
 class point {
  public:
@@ -28,9 +29,11 @@ class point {
   friend std::ostream &operator<<(std::ostream &os, const point &point);
 };
 
+
+
 class node {
  public:
-  int cost;
+  double cost;
   std::vector<model> map;
   std::vector<point> pos;
   point target;
@@ -40,6 +43,10 @@ class node {
 
   int cols;
   int rows;
+
+  std::map<int, point> teletransport_tiles = {};
+ 
+  bool closedTiles;
 
   node(const std::vector<int> &initializer, const int &rows, const int &cols);
   ~node();

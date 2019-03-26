@@ -12,5 +12,7 @@ enum mode
 enum heuristic
 {
   none,
-  distance
+  distance,
+  manhattan_distance,
+  euclidian_distance
 };

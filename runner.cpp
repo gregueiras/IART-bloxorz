@@ -3,6 +3,7 @@
 #include "levels.h"
 #include <chrono>
 
+
 node runner::find_solution(bool output, int limit) {
   std::priority_queue<node> queue;
   node initial(this->map_, this->rows_, this->cols_);
@@ -16,7 +17,7 @@ node runner::find_solution(bool output, int limit) {
 
     for (auto& op : this->ops_) {
       try {
-        auto child = op(no, this->cost_);
+        auto child = op(no, this->cost_, this->heuristic_);
 
         auto conditions = false;
 
@@ -50,7 +51,10 @@ node runner::find_solution(bool output, int limit) {
   throw std::exception("NO MORE NODES");
 }
 
-long long runner::run(const int i)
+//CORRE (2)
+node runner::run() { return find_solution(true, NULL); }
+
+/*long long runner::run(const int i)
 {
   const auto begin =
       std::chrono::steady_clock::now();
@@ -62,7 +66,7 @@ long long runner::run(const int i)
   const auto end = std::chrono::steady_clock::now();
   
   return std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
-}
+}*/
 
 runner::runner() {
   this->ops_ = {roll_up, roll_down, roll_left, roll_right};
@@ -81,6 +85,23 @@ runner::runner(const mode mode, const std::vector<int>& map, const int rows,
   this->map_ = map;
   this->cols_ = cols;
   this->rows_ = rows;
+  switch(mode) {
+  case bfs:
+  case iterative :
+	  this->cost_ = dec;
+	  break;
+  case dfs:
+	  this->cost_ = inc;
+	  break;
+  case greedy :
+	  this->cost_ = greedy_;
+	  break;
+  case a_star :
+	  this->cost_ = a_star_;
+	  break;
+  default:
+	  break;
+  }
 }
 
 runner::runner(const mode mode, const heuristic heuristic,
