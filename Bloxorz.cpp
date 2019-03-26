@@ -42,7 +42,7 @@ int main() {
 	
 
   // corre x vezes -> versao final provavelmente
-  auto r = runner(a_star, manhattan_distance, LVL1, LVL1_R, LVL1_C);
+  auto r = runner(a_star, manhattan_teletransport_distance, LVL1, LVL1_R, LVL1_C);
   auto sol = r.run(100);
 
   std::cout << sol << std::endl << std::endl << "TIME*100: " << sol << std::endl;
