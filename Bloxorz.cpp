@@ -3,69 +3,47 @@
 //
 
 #include <iostream>
-#include "levels.h"
-#include "node.h"
+#include "windows.h"
 #include "operators.h"
-#include "runner.h"
+#include "psapi.h"
 #include "reader.h"
+#include "runner.h"
+#define WIN32_LEAN_AND_MEAN
 
-int main() {
-  
- /*
-//  corre "manualmente" sem runner -> testar cenas das posicoes
-  node initial(LVL1, 5, 7);
-  auto second = roll_down(initial, inc, manhattan_distance);
-  auto third = roll_up(second, inc, manhattan_distance);
-  auto fourth = roll_down(third, inc, manhattan_distance);
-
-  initial.print();
-  std::cout << std::endl << std::endl;
-  second.print();
-  std::cout << std::endl << std::endl;
-  third.print();
-  std::cout << std::endl << std::endl;
-  fourth.print();
-
-  std::cout << std::endl << initial.cost << std::endl << second.cost <<
-   std::endl << third.cost << std::endl;*/
-
-  /* nao sei o que isto e
-  if (third.objective()) {
-    std::cout << "HEY";
-    }*/
-  
-	/*
-	// mostra as posiçoes util para ver se esta a correr o caminho certo (2)
-	auto r = runner(a_star, manhattan_teletransport_distance, LVL1, LVL1_R, LVL1_C);
-	auto sol = r.run();
-
-	std::cout << sol << std::endl << std::endl << "COST: " << sol.cost << std::endl;*/
-	
-
-  // corre x vezes -> versao final provavelmente
-  //Level lvl = readToLevel("Level1.txt");
-  auto r = runner(a_star, manhattan_teletransport_distance, LVL1, LVL1_R, LVL1_C);
-  auto sol = r.run(100);
-
-  std::cout << sol << std::endl << std::endl << "TIME*100: " << sol << std::endl;
-
-  for (auto i = 0; i < 10; ++i)
-  {
-  sol = r.run(50);
-  std::cout << "TIME*100: " << sol << std::endl;
+void run(int n, mode mode, heuristic heuristic, int limit, std::string file,
+         std::ostream& os) {
+  auto lvl = readToLevel(file);
+  runner r;
+  if (limit == NULL) {
+    r =
+        runner(mode, heuristic, lvl.level_map, lvl.num_rows, lvl.num_columns);
+  } else {
+    r = runner(mode, limit, lvl.level_map, lvl.num_rows, lvl.num_columns);
   }
-  
+
+  PROCESS_MEMORY_COUNTERS pmc;
+  const auto myHandle = GetCurrentProcess();
+  GetProcessMemoryInfo(myHandle, &pmc, sizeof(pmc));
+  size_t res = pmc.WorkingSetSize;
+  size_t res_old;
+
+  for (auto i = 0; i < n; ++i) {
+    node node;
+    auto sol = r.run(n, node);
+
+    if (GetProcessMemoryInfo(myHandle, &pmc, sizeof(pmc))) {
+      res_old = res;
+      res = (pmc.WorkingSetSize);
+    }
+    os << "TIME*" << n << ": " << sol << "\tNODES: " << r.get_nodes_analyzed()
+       << "\tMEMORY EXPECTED: "
+       << r.get_nodes_analyzed() * sizeof(node) / 1024.0 << " kB"
+       << "\tMEMORY MEASURED: " << (res - res_old) / 1024.0 << " kB"
+       << std::endl;
+  }
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started:
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add
-//   Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project
-//   and select the .sln file
+int main() {
+  run(5, a_star, manhattan_teletransport_distance, NULL, "./levels/level1.txt", std::cout);
+  //run(5, iterative, none, 5, "./levels/level1.txt", std::cout);
+}

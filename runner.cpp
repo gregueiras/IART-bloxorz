@@ -2,14 +2,16 @@
 #include <algorithm>
 #include "levels.h"
 #include <chrono>
+#include <iostream>
 
 
-node runner::find_solution(bool output, int limit) {
+node runner::find_solution() {
   std::priority_queue<node> queue;
   node initial(this->map_, this->rows_, this->cols_);
   queue.push(initial);
 
   while (!queue.empty() && !queue.top().objective()) {
+    this->nodes_analyzed_++;
     auto no = queue.top();
     queue.pop();
 
@@ -24,7 +26,7 @@ node runner::find_solution(bool output, int limit) {
         if (this->mode_ == iterative) {
           conditions = std::find(no.parents.begin(), no.parents.end(),
                                  child.pos) == no.parents.end() &&
-                       child.cost <= limit;
+                       -child.cost <= this->limit_;
         } else {
           conditions = std::find(no.parents.begin(), no.parents.end(),
                                  child.pos) == no.parents.end();
@@ -54,14 +56,20 @@ node runner::find_solution(bool output, int limit) {
 //CORRE (2)
 //node runner::run() { return find_solution(true, NULL); }
 
-long long runner::run(const int i)
-{
+long long runner::run(const int i, node& node_ret) {
+  this->nodes_analyzed_ = 0;
   const auto begin =
       std::chrono::steady_clock::now();
 
   for (auto j = 0; j < i; ++j)
   {
-    find_solution(true, NULL);
+	  try {
+		node_ret = find_solution();
+	  }
+	  catch (std::exception e) {
+		  std::cout << "No solution found! \n";
+	  }
+	
   }
   const auto end = std::chrono::steady_clock::now();
   
@@ -76,6 +84,7 @@ runner::runner() {
   this->cols_ = 7;
   this->rows_ = 5;
   this->cost_ = inc;
+  this->limit_ = -1;
 }
 
 runner::runner(const mode mode, const std::vector<int>& map, const int rows,
@@ -110,4 +119,13 @@ runner::runner(const mode mode, const heuristic heuristic,
   this->heuristic_ = heuristic;
 }
 
+runner::runner(const mode mode, const int limit,
+               const std::vector<int>& map, const int rows, const int cols)
+    : runner(mode, map, rows, cols) {
+  this->limit_ = limit;
+}
+
 runner::~runner() = default;
+
+int runner::get_nodes_analyzed() const
+{ return nodes_analyzed_; }

@@ -11,23 +11,27 @@ class runner {
   std::priority_queue<node> queue_;
   mode mode_;
   heuristic heuristic_;
+  int limit_;
 
   cost_function cost_;
 
-  node find_solution(bool output, int limit);
+  node find_solution();
+
+  int nodes_analyzed_ = 0;
 
  public:
 	 //corre o (2)
 	// node run();
-  long long run(int i);
+  long long run(int i, node& node_ret);
 
   runner();
   runner(mode mode, const std::vector<int>& map, int rows, int cols);
   runner(mode mode, heuristic heuristic, const std::vector<int>& map, int rows, int cols);
+  runner(mode mode, int limit, const std::vector<int>& map, int rows, int cols);
   
   ~runner();
 
-  
+  int get_nodes_analyzed() const;
 
 
 };
