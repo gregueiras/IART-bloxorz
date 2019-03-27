@@ -50,6 +50,7 @@ class node {
 
   node(const std::vector<int> &initializer, const int &rows, const int &cols);
   ~node();
+  node();
 
   bool operator<(const node &rhs) const;
   bool operator==(const node &rhs) const;
