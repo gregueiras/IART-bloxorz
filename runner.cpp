@@ -5,7 +5,7 @@
 #include <iostream>
 
 
-node runner::find_solution(bool output, int limit) {
+node runner::find_solution() {
   std::priority_queue<node> queue;
   node initial(this->map_, this->rows_, this->cols_);
   queue.push(initial);
@@ -27,7 +27,7 @@ node runner::find_solution(bool output, int limit) {
         if (this->mode_ == iterative) {
           conditions = std::find(no.parents.begin(), no.parents.end(),
                                  child.pos) == no.parents.end() &&
-                       child.cost <= limit;
+                       -child.cost <= this->limit_;
         } else {
           conditions = std::find(no.parents.begin(), no.parents.end(),
                                  child.pos) == no.parents.end();
@@ -68,7 +68,7 @@ long long runner::run(const int i, node& node_ret) {
   for (auto j = 0; j < i; ++j)
   {
 	  try {
-		node_ret = find_solution(true, NULL);
+		node_ret = find_solution();
 	  }
 	  catch (std::exception e) {
 		  std::cout << "No solution found! \n";
@@ -89,6 +89,7 @@ runner::runner() {
   this->cols_ = 7;
   this->rows_ = 5;
   this->cost_ = inc;
+  this->limit_ = -1;
 }
 
 runner::runner(const mode mode, const std::vector<int>& map, const int rows,
@@ -123,7 +124,13 @@ runner::runner(const mode mode, const heuristic heuristic,
   this->heuristic_ = heuristic;
 }
 
+runner::runner(const mode mode, const int limit,
+               const std::vector<int>& map, const int rows, const int cols)
+    : runner(mode, map, rows, cols) {
+  this->limit_ = limit;
+}
+
 runner::~runner() = default;
 
-int runner::getNodes_Analyzed()
+int runner::get_nodes_analyzed() const
 { return nodes_analyzed_; }
