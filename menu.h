@@ -27,16 +27,16 @@ public :
 
 };
 
-void firstMenu(runnerValues &values);
+bool firstMenu(runnerValues &values);
 
-void chooseLevelMenu(runnerValues &values);
+bool chooseNumberRuns(runnerValues &values);
 
-void chooseAlgorithmMenu(runnerValues &values);
+bool chooseLevelMenu(runnerValues &values);
 
-void chooseHeuristicMenu(runnerValues &values);
+bool chooseAlgorithmMenu(runnerValues &values);
 
-void chooseHeuristicMenu(runnerValues &values);
+bool chooseHeuristicMenu(runnerValues &values);
 
-void chooseIterativeDepthMenu(runnerValues &values);
+bool chooseHeuristicMenu(runnerValues &values);
 
-void chooseNumberRuns(runnerValues &values);
+bool chooseIterativeDepthMenu(runnerValues &values);

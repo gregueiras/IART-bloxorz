@@ -9,13 +9,19 @@ void runnerValues::setFile(int levelNumber) {
 		this->file = "./levels/level1.txt";
 		break;
 	case 2:
-		this->file = "./levels/level2.txt";
+		this->file = "./levels/level2i.txt";
 		break;
 	case 3:
 		this->file =  "./levels/level3.txt";
 		break;
 	case 4:
 		this->file = "./levels/level4.txt";
+		break;
+	case 5:
+		this->file = "./levels/level5.txt";
+		break;
+	case 6:
+		this->file = "./levels/level6.txt";
 		break;
 	default:
 		this->file = "./levels/level1.txt";
@@ -125,24 +131,38 @@ int getInt()
 	return num;
 }
 
-void firstMenu(runnerValues &values)
+bool firstMenu(runnerValues &values)
 {
 	std::cout << "Hello there!" << std::endl << std::endl;
 	std::cout
-		<< "1- Choose level" << std::endl
-		<< "2- Quit" << std::endl
+		<< "1- Run 1 time" << std::endl
+		<< "2- Run multiple times" << std::endl
+		<< "3- Quit" << std::endl
 		<< "Select one" << std::endl;
-	switch (getIntInInterval(1, 2))
+	switch (getIntInInterval(1, 3))
 	{
 	case 1:
+		values.setRunTimes(1);
 		return chooseLevelMenu(values);
 	case 2:
+		return chooseNumberRuns(values);
+	case 3:
 		std::cout << "Closing..." << std::endl;
-		return;
+		return false;
 	}
 }
 
-void chooseLevelMenu(runnerValues &values)
+
+bool chooseNumberRuns(runnerValues &values) {
+	std::cout << "How many times the agent should run? " << std::endl;
+	int runTimes = getInt();
+	if (runTimes == -1)
+		return firstMenu(values);
+	values.setRunTimes(runTimes);
+	return chooseLevelMenu(values);
+}
+
+bool chooseLevelMenu(runnerValues &values)
 {
 	std::cout
 		<< "1- Level 1" << std::endl
@@ -159,13 +179,13 @@ void chooseLevelMenu(runnerValues &values)
 		break;
 	case 5:
 		std::cout << "Closing..." << std::endl;
-		return;
+		return false;
 	}
 	return chooseAlgorithmMenu(values);
 }
 
 
-void chooseAlgorithmMenu(runnerValues &values)
+bool chooseAlgorithmMenu(runnerValues &values)
 {
 	std::cout
 		<< "1- Breadth-First Search (BFS)" << std::endl
@@ -193,13 +213,13 @@ void chooseAlgorithmMenu(runnerValues &values)
 	}
 }
 
-void chooseHeuristicMenu(runnerValues &values)
+bool chooseHeuristicMenu(runnerValues &values)
 {
 	std::cout
 		<< "1- Manhattan distance" << std::endl
 		<< "2- Euclidian distance" << std::endl
 		<< "3- Manhattan distance with teletransport" << std::endl  
-		<< "4- Euclidina distance with teletransport" << std::endl
+		<< "4- Euclidian distance with teletransport" << std::endl
 		<< "5- Go back" << std::endl
 		<< "Select one" << std::endl;
 	int choice = getIntInInterval(1, 5);
@@ -207,31 +227,23 @@ void chooseHeuristicMenu(runnerValues &values)
 	{
 	case 1: case 2: case 3: case 4:
 		values.setHeuristic(choice);
-		return chooseNumberRuns(values);
-		break;
+		return true;
 	case 5:
 		return chooseLevelMenu(values);
 	}
 }
 
 
-void chooseIterativeDepthMenu(runnerValues &values) {
+bool chooseIterativeDepthMenu(runnerValues &values) {
 	std::cout << "Iterative Depth? " << std::endl;
 	int depth = getInt();
 	if (depth == -1)
 		return chooseAlgorithmMenu(values);
 	values.setDepth(depth);
-	return chooseNumberRuns(values);
+	return true;
 }
 
 
-void chooseNumberRuns(runnerValues &values) {
-	std::cout << "How many times the agent should run? " << std::endl;
-	int runTimes = getInt();
-	if (runTimes == -1)
-		return chooseAlgorithmMenu(values);
-	values.setRunTimes(runTimes);
-}
 
 
 
