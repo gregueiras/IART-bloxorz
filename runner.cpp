@@ -15,7 +15,8 @@ node runner::find_solution(bool output, int limit) {
     auto no = queue.top();
     queue.pop();
 
-    if (no.objective()) no.print();
+   
+		no.print();
 
     for (auto& op : this->ops_) {
       try {
@@ -48,7 +49,10 @@ node runner::find_solution(bool output, int limit) {
     }
   }
 
-  if (!queue.empty()) return queue.top();
+  if (!queue.empty()) {
+	//  queue.top().print();
+	return queue.top();
+  }
 
   throw std::exception("NO MORE NODES");
 }
@@ -69,6 +73,7 @@ long long runner::run(const int i, node& node_ret) {
 	  catch (std::exception e) {
 		  std::cout << "No solution found! \n";
 	  }
+	  node_ret.print();
 	
   }
   const auto end = std::chrono::steady_clock::now();

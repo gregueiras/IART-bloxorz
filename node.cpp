@@ -12,8 +12,8 @@ node::node(const std::vector<int> &initializer, const int &rows, const int &cols
   this->cols = cols;
   this->rows = rows;
   this->closedTiles = true;
-  this->belowBlock1 = 0;
-  this->belowBlock2 = 0;
+  this->belowBlock1 = empty_tile;
+  this->belowBlock2 = empty_tile;
 
   const int length = initializer.size();
   if (length != rows * cols)
