@@ -169,15 +169,17 @@ bool chooseLevelMenu(runnerValues &values)
 		<< "2- Level 2" << std::endl
 		<< "3- Level 3" << std::endl
 		<< "4- Level 4" << std::endl
-		<< "5- Quit" << std::endl
+		<< "5- Level 5" << std::endl
+		<< "6- Level 5" << std::endl
+		<< "7- Quit" << std::endl
 		<< "Select one" << std::endl;
-	int choice = getIntInInterval(1, 5);
+	int choice = getIntInInterval(1, 7);
 	switch (choice)
 	{
-	case 1: case 2: case 3: case 4: 
+	case 1: case 2: case 3: case 4: case 5: case 6:
 		values.setFile(choice);
 		break;
-	case 5:
+	case 7:
 		std::cout << "Closing..." << std::endl;
 		return false;
 	}
