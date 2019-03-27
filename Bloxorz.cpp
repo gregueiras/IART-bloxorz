@@ -8,6 +8,7 @@
 #include "psapi.h"
 #include "reader.h"
 #include "runner.h"
+#include "menu.h"
 #define WIN32_LEAN_AND_MEAN
 
 void run(int n, mode mode, heuristic heuristic, int limit, std::string file,
@@ -44,6 +45,9 @@ void run(int n, mode mode, heuristic heuristic, int limit, std::string file,
 }
 
 int main() {
-  run(5, a_star, manhattan_teletransport_distance, NULL, "./levels/level1.txt", std::cout);
+
+ runnerValues values;
+  firstMenu(values);
+  run(values.getRunTimes(), values.getMode(), values.getHeuristic(), values.getDepth(), values.getFile(), std::cout);
   //run(5, iterative, none, 5, "./levels/level1.txt", std::cout);
 }
