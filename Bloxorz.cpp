@@ -33,15 +33,16 @@ int main() {
     std::cout << "HEY";
     }*/
   
+	/*
 	// mostra as posiçoes util para ver se esta a correr o caminho certo (2)
-	auto r = runner(a_star, manhattan_distance, LVL1, LVL1_R, LVL1_C);
+	auto r = runner(a_star, manhattan_teletransport_distance, LVL1, LVL1_R, LVL1_C);
 	auto sol = r.run();
 
-	std::cout << sol << std::endl << std::endl << "COST: " << sol.cost << std::endl;
+	std::cout << sol << std::endl << std::endl << "COST: " << sol.cost << std::endl;*/
 	
 
-  /* corre x vezes -> versao final provavelmente
-  auto r = runner(a_star, manhattan_distance, LVL1, LVL1_R, LVL1_C);
+  // corre x vezes -> versao final provavelmente
+  auto r = runner(a_star, manhattan_teletransport_distance, LVL1, LVL1_R, LVL1_C);
   auto sol = r.run(100);
 
   std::cout << sol << std::endl << std::endl << "TIME*100: " << sol << std::endl;
@@ -51,7 +52,7 @@ int main() {
   sol = r.run(50);
   std::cout << "TIME*100: " << sol << std::endl;
     
-  }*/
+  }
   
 }
 

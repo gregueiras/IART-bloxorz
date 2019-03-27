@@ -1,11 +1,19 @@
 #include "costs.h"
 #include <algorithm>
 #include <stdexcept>
+#include <iostream>
 
 
-const double heuristic_manhattan_distance(const node &node)
+const double manhattan_distance_aux(const int x1, const int y1, const int x2, const int y2){
+	return abs(x2 - x1) + abs(y2 - y1);
+}
+
+const double euclidian_distance_aux(const int x1, const int y1, const int x2, const int y2){
+	return sqrt(pow((x2 - x1), 2) + pow((y2 - y1), 2));
+}
+
+const double heuristic_distance_aux(const node &node, point target, distance_aux_function distance_function)
 {
-
 	if (node.pos.size() == 2)
 	{
 		const auto target_x = node.target.x;
@@ -14,8 +22,8 @@ const double heuristic_manhattan_distance(const node &node)
 		const auto y1 = node.pos.at(0).y;
 		const auto x2 = node.pos.at(1).x;
 		const auto y2 = node.pos.at(1).x;
-		const auto distance_1 = abs(target_x - x1) + abs(target_y - y1);
-		const auto distance_2 = abs(target_x - x2) + abs(target_y - y2);
+		const auto distance_1 = distance_function(x1, y1, target_x, target_y);
+		const auto distance_2 = distance_function(x2, y2, target_x, target_y);
 		return std::min(distance_1, distance_2);
 	}
 	else if (node.pos.size() == 1)
@@ -24,7 +32,7 @@ const double heuristic_manhattan_distance(const node &node)
 		const auto target_y = node.target.y;
 		const auto x = node.pos.at(0).x;
 		const auto y = node.pos.at(0).y;
-		return abs(target_x - x) + abs(target_y - y);
+		return distance_function(x, y, target_x, target_y);
 	}
 	else
 	{
@@ -32,32 +40,50 @@ const double heuristic_manhattan_distance(const node &node)
 	}
 }
 
-const double heuristic_euclidian_distance(const node &node)
-{
-	if (node.pos.size() == 2)
-	{
-		const auto target_x = node.target.x;
-		const auto target_y = node.target.y;
-		const auto x1 = node.pos.at(0).x;
-		const auto y1 = node.pos.at(0).y;
-		const auto x2 = node.pos.at(1).x;
-		const auto y2 = node.pos.at(1).x;
-		const auto distance_1 = sqrt(pow((target_x - x1), 2) + pow((target_y - y1), 2));
-		const auto distance_2 = sqrt(pow((target_x - x2), 2) + pow((target_y - y2), 2));
-		return std::min(distance_1, distance_2);
+
+const double heuristic_manhattan_distance_aux(const node &node, point target){
+	return heuristic_distance_aux(node, target, manhattan_distance_aux);
+}
+
+const double heuristic_euclidian_distance_aux(const node &node, point target){
+	return heuristic_distance_aux(node, target, euclidian_distance_aux);
+}
+
+const double heuristic_manhattan_distance(const node &node) {
+	return heuristic_manhattan_distance_aux(node, node.target);
+}
+
+const double heuristic_euclidian_distance(const node &node){
+	return heuristic_euclidian_distance_aux(node, node.target);
+}
+
+
+const double heuristic_teletransport_distance_aux(const node &node, heuristic_distance_function heuristic_function, heuristic_distance_aux_function heuristic_function_aux,distance_aux_function distance_function) {
+	const double distance_target = heuristic_function(node);
+	double  total_distance = 0, min_tel_distance = -1;
+
+	for (auto const& tile : node.teletransport_tiles) {
+		auto next_tile = node.teletransport_tiles.at(tile.first*-1);
+		total_distance = heuristic_function_aux(node, tile.second) + distance_function(next_tile.x, next_tile.y, node.target.x, node.target.y);
+		if (min_tel_distance == -1)
+			min_tel_distance = total_distance;
+		else
+			min_tel_distance = std::min(min_tel_distance, total_distance);
 	}
-	else if (node.pos.size() == 1)
-	{
-		const auto target_x = node.target.x;
-		const auto target_y = node.target.y;
-		const auto x = node.pos.at(0).x;
-		const auto y = node.pos.at(0).y;
-		return sqrt(pow((target_x - x), 2) + pow((target_y - y), 2));
-	}
-	else
-	{
-		throw std::invalid_argument("invalid position");
-	}
+	if (min_tel_distance == -1)
+		return distance_target;
+	return std::min(min_tel_distance, distance_target);
+}
+
+
+
+const double heuristic_teletransport_manhattan_distance(const node &node) {
+	return  heuristic_teletransport_distance_aux(node, heuristic_manhattan_distance, heuristic_manhattan_distance_aux, manhattan_distance_aux);
+}
+
+
+const double heuristic_teletransport_euclidian_distance(const node &node) {
+	return  heuristic_teletransport_distance_aux(node, heuristic_euclidian_distance, heuristic_euclidian_distance_aux, euclidian_distance_aux);
 }
 
 
@@ -72,6 +98,10 @@ const double heuristic_func(const node &node, heuristic heuristic_)
 		return heuristic_manhattan_distance(node);
 	case euclidian_distance:
 		return heuristic_euclidian_distance(node);
+	case manhattan_teletransport_distance :
+		return heuristic_teletransport_manhattan_distance(node);
+	case euclidian_teletransport_distance:
+		return heuristic_teletransport_euclidian_distance(node);
 	default:
 		return -1;
 	}
