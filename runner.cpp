@@ -2,6 +2,7 @@
 #include <algorithm>
 #include "levels.h"
 #include <chrono>
+#include <iostream>
 
 
 node runner::find_solution(bool output, int limit) {
@@ -61,7 +62,13 @@ long long runner::run(const int i)
 
   for (auto j = 0; j < i; ++j)
   {
-    find_solution(true, NULL);
+	  try {
+		  find_solution(true, NULL);
+	  }
+	  catch (std::exception e) {
+		  std::cout << "No solution found! \n";
+	  }
+
   }
   const auto end = std::chrono::steady_clock::now();
   
