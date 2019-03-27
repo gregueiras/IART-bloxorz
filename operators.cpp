@@ -196,9 +196,10 @@ node standing_move(node& state, const cost_function cost, heuristic heuristic_,c
   const auto new_index1 = get_index(new_x1, new_y1, state.cols);
   const auto new_index2 = get_index(new_x2, new_y2, state.cols);
 
-
+  // if the tile is not a invalid tile
   if (state.map[new_index1] != invalid_tile && state.map[new_index2] != invalid_tile)
   {
+	  // if the tile is not a closed tile
 	  if ((state.map[new_index1] != closed_tile && state.map[new_index2] != closed_tile) ||
 		  ((state.map[new_index1] == closed_tile || state.map[new_index2] == closed_tile) && state.closedTiles == false))
 	  {
@@ -214,7 +215,6 @@ node standing_move(node& state, const cost_function cost, heuristic heuristic_,c
 	  }
 	  else
 		  throw std::invalid_argument("closed tile");
-
   }
   else
 	  throw std::invalid_argument("invalid tile");
@@ -237,8 +237,10 @@ node sideways_move(node& state, const cost_function cost, heuristic heuristic_, 
 	const auto new_index1 = get_index(new_x1, new_y1, state.cols);
 	const auto new_index2 = get_index(new_x2, new_y2, state.cols);
 
+	// if the tile is not a invalid tile
 	if (state.map[new_index1] != invalid_tile && state.map[new_index2] != invalid_tile)
 	{
+		// if the tile is not a closed tile
 		if ((state.map[new_index1] != closed_tile && state.map[new_index2] != closed_tile) ||
 			((state.map[new_index1] == closed_tile || state.map[new_index2] == closed_tile) && state.closedTiles == false))
 		{
@@ -273,11 +275,14 @@ node forewards_move(node& state, const cost_function cost, heuristic heuristic_,
 
 	 auto new_index = get_index(new_x, new_y, state.cols);
 
+	 // if the tile is not a invalid tile
 	if (state.map[new_index] != invalid_tile)
 	{
+		// if the tile is not a closed tile
 		if ((state.map[new_index] != closed_tile) ||
 			(state.map[new_index] == closed_tile && state.closedTiles == false))
 		{
+			// if the tile is a push_tile
 			if (state.map[new_index] == push_tile)
 			{
 				const auto tmp_x = new_x + 1 * direction_x;
@@ -294,14 +299,16 @@ node forewards_move(node& state, const cost_function cost, heuristic heuristic_,
 					}
 				}
 			}
+
+			//if the file is a teletransport tile (the block will be teletransported)
 			if (state.map[new_index] == teletransport_tile_1 || state.map[new_index] == teletransport_tile_2 || state.map[new_index] == teletransport_tile_3 || state.map[new_index] == teletransport_tile_4)
 			{
-				//TODO mandar excecao aqui se nao existir (acho melhor)
-				const auto new_tile = state.teletransport_tiles[state.map[new_index] * -1];
+				const auto new_tile = state.teletransport_tiles.at(state.map[new_index] * -1);
 				new_x = new_tile.x;
 				new_y = new_tile.y;
 				new_index = get_index(new_x, new_y, state.cols);
 			}
+			//if the tile is a door it will open the closed tiles
 			if (state.map[new_index] == door_tile)
 			{
 				state.closedTiles = !state.closedTiles;
