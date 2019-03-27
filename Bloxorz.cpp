@@ -35,7 +35,7 @@ int main() {
     }*/
   
 	/*
-	// mostra as posiçoes util para ver se esta a correr o caminho certo (2)
+	// mostra as posiï¿½oes util para ver se esta a correr o caminho certo (2)
 	auto r = runner(a_star, manhattan_teletransport_distance, LVL1, LVL1_R, LVL1_C);
 	auto sol = r.run();
 
@@ -53,7 +53,7 @@ int main() {
   for (auto i = 0; i < 10; ++i)
   {
   sol = r.run(50);
-  std::cout << "TIME*100: " << sol << std::endl;
+  std::cout << "TIME*100: " << sol << '\t' << "NODES: " << r.getNodes_Analyzed() <<std::endl;
     
   }
   

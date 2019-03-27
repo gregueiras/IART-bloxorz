@@ -16,6 +16,8 @@ class runner {
 
   node find_solution(bool output, int limit);
 
+  int nodes_analyzed_ = 0;
+
  public:
 	 //corre o (2)
 	// node run();
@@ -27,7 +29,7 @@ class runner {
   
   ~runner();
 
-  
+  int getNodes_Analyzed();
 
 
 };

@@ -6,11 +6,13 @@
 
 
 node runner::find_solution(bool output, int limit) {
+  this->nodes_analyzed_ = 0;
   std::priority_queue<node> queue;
   node initial(this->map_, this->rows_, this->cols_);
   queue.push(initial);
 
   while (!queue.empty() && !queue.top().objective()) {
+    this->nodes_analyzed_++;
     auto no = queue.top();
     queue.pop();
 
@@ -118,3 +120,6 @@ runner::runner(const mode mode, const heuristic heuristic,
 }
 
 runner::~runner() = default;
+
+int runner::getNodes_Analyzed()
+{ return nodes_analyzed_; }
