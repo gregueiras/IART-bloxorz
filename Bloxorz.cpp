@@ -8,13 +8,21 @@
 #include "windows.h"
 #include "psapi.h"
 #include "runner.h"
+#include "reader.h"
+
 #define WIN32_LEAN_AND_MEAN
 
 int main() {
   auto r =
       //runner(a_star, manhattan_teletransport_distance, LVL1, LVL1_R, LVL1_C);
+	  
+
+
       runner(dfs, LVL1, LVL1_R, LVL1_C);
   
+	  //Level lvl = readToLevel("Level1.txt");
+	  //runner(dfs, lvl.level_map, lvl.num_rows, lvl.num_columns);
+
   PROCESS_MEMORY_COUNTERS pmc;
   const auto myHandle = GetCurrentProcess();
   GetProcessMemoryInfo(myHandle, &pmc, sizeof(pmc));
