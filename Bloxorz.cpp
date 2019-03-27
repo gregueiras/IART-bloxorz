@@ -7,6 +7,7 @@
 #include "node.h"
 #include "operators.h"
 #include "runner.h"
+#include "reader.h"
 
 int main() {
   
@@ -42,6 +43,7 @@ int main() {
 	
 
   // corre x vezes -> versao final provavelmente
+  //Level lvl = readToLevel("Level1.txt");
   auto r = runner(a_star, manhattan_teletransport_distance, LVL1, LVL1_R, LVL1_C);
   auto sol = r.run(100);
 
@@ -51,7 +53,6 @@ int main() {
   {
   sol = r.run(50);
   std::cout << "TIME*100: " << sol << std::endl;
-    
   }
   
 }
