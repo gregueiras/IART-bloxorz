@@ -21,7 +21,7 @@ class runner {
  public:
 	 //corre o (2)
 	// node run();
-  long long run(int i);
+  long long run(int i, node& node_ret);
 
   runner();
   runner(mode mode, const std::vector<int>& map, int rows, int cols);

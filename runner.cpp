@@ -6,7 +6,6 @@
 
 
 node runner::find_solution(bool output, int limit) {
-  this->nodes_analyzed_ = 0;
   std::priority_queue<node> queue;
   node initial(this->map_, this->rows_, this->cols_);
   queue.push(initial);
@@ -57,20 +56,20 @@ node runner::find_solution(bool output, int limit) {
 //CORRE (2)
 //node runner::run() { return find_solution(true, NULL); }
 
-long long runner::run(const int i)
-{
+long long runner::run(const int i, node& node_ret) {
+  this->nodes_analyzed_ = 0;
   const auto begin =
       std::chrono::steady_clock::now();
 
   for (auto j = 0; j < i; ++j)
   {
 	  try {
-		  find_solution(true, NULL);
+		node_ret = find_solution(true, NULL);
 	  }
 	  catch (std::exception e) {
 		  std::cout << "No solution found! \n";
 	  }
-
+	
   }
   const auto end = std::chrono::steady_clock::now();
   

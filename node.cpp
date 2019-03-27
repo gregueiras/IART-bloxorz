@@ -76,6 +76,7 @@ node::node(const std::vector<int> &initializer, const int &rows, const int &cols
   }
 }
 
+node::node() : node({}, 0, 0) {}
 
 node::~node()
 = default;
