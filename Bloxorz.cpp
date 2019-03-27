@@ -50,7 +50,7 @@ int main() {
   for (auto i = 0; i < 10; ++i)
   {
   sol = r.run(50);
-  std::cout << "TIME*100: " << sol << std::endl;
+  std::cout << "TIME*100: " << sol << '\t' << "NODES: " << r.getNodes_Analyzed() <<std::endl;
     
   }
   
