@@ -3,17 +3,22 @@
 #include "menu.h"
 
 
-void runnerValues::setLevel(int levelNumber) {
+void runnerValues::setFile(int levelNumber) {
 	switch (levelNumber) {
 	case 1:
+		this->file = "./levels/level1.txt";
 		break;
 	case 2:
+		this->file = "./levels/level2.txt";
 		break;
 	case 3:
+		this->file =  "./levels/level3.txt";
 		break;
 	case 4:
+		this->file = "./levels/level4.txt";
 		break;
 	default:
+		this->file = "./levels/level1.txt";
 		break;
 	}
 }
@@ -22,22 +27,22 @@ void runnerValues::setMode(int modeNumber) {
 	switch (modeNumber)
 	{
 	case 1:
-		this->mode = bfs;
+		this->mode_ = bfs;
 		break;
 	case 2:
-		this->mode = dfs;
+		this->mode_ = dfs;
 		break;
 	case 3:
-		this->mode = iterative;
+		this->mode_ = iterative;
 		break;
 	case 4:
-		this->mode = greedy;
+		this->mode_ = greedy;
 		break;
 	case 5:
-		this->mode = a_star;
+		this->mode_ = a_star;
 		break;
 	default:
-		this->mode = dfs;
+		this->mode_ = dfs;
 		break;
 	}
 }
@@ -47,25 +52,29 @@ void runnerValues::setHeuristic(int heuristicNumber)
 	switch (heuristicNumber)
 	{
 	case 1:
-		this->heuristic = manhattan_distance;
+		this->heuristic_ = manhattan_distance;
 		break;
 	case 2:
-		this->heuristic = euclidian_distance;
+		this->heuristic_ = euclidian_distance;
 		break;
 	case 3:
-		this->heuristic = manhattan_teletransport_distance;
+		this->heuristic_ = manhattan_teletransport_distance;
 		break;
 	case 4:
-		this->heuristic = euclidian_teletransport_distance;
+		this->heuristic_ = euclidian_teletransport_distance;
 		break;
 	default:
-		this->heuristic = manhattan_distance;
+		this->heuristic_ = manhattan_distance;
 		break;
 	}
 }
 
 void runnerValues::setDepth(int depth) {
 	this->depth = depth;
+}
+
+void runnerValues::setRunTimes(int runTimes) {
+	this->runTimes = runTimes;
 }
 
 
@@ -146,7 +155,7 @@ void chooseLevelMenu(runnerValues &values)
 	switch (choice)
 	{
 	case 1: case 2: case 3: case 4: 
-		values.setLevel(choice);
+		values.setFile(choice);
 		break;
 	case 5:
 		std::cout << "Closing..." << std::endl;
@@ -198,6 +207,7 @@ void chooseHeuristicMenu(runnerValues &values)
 	{
 	case 1: case 2: case 3: case 4:
 		values.setHeuristic(choice);
+		return chooseNumberRuns(values);
 		break;
 	case 5:
 		return chooseLevelMenu(values);
@@ -206,11 +216,21 @@ void chooseHeuristicMenu(runnerValues &values)
 
 
 void chooseIterativeDepthMenu(runnerValues &values) {
-	std::cout << "Starting location? " << std::endl;
+	std::cout << "Iterative Depth? " << std::endl;
 	int depth = getInt();
 	if (depth == -1)
 		return chooseAlgorithmMenu(values);
 	values.setDepth(depth);
+	return chooseNumberRuns(values);
+}
+
+
+void chooseNumberRuns(runnerValues &values) {
+	std::cout << "How many times the agent should run? " << std::endl;
+	int runTimes = getInt();
+	if (runTimes == -1)
+		return chooseAlgorithmMenu(values);
+	values.setRunTimes(runTimes);
 }
 
 
