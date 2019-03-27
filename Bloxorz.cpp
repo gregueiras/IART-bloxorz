@@ -47,7 +47,8 @@ void run(int n, mode mode, heuristic heuristic, int limit, std::string file,
 int main() {
 
  runnerValues values;
-  firstMenu(values);
-  run(values.getRunTimes(), values.getMode(), values.getHeuristic(), values.getDepth(), values.getFile(), std::cout);
+
+   if(firstMenu(values))
+   run(values.getRunTimes(), values.getMode(), values.getHeuristic(), values.getDepth(), values.getFile(), std::cout);
   //run(5, iterative, none, 5, "./levels/level1.txt", std::cout);
 }
