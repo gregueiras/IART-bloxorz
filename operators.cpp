@@ -203,12 +203,17 @@ node standing_move(node& state, const cost_function cost, heuristic heuristic_,c
 	  if ((state.map[new_index1] != closed_tile && state.map[new_index2] != closed_tile) ||
 		  ((state.map[new_index1] == closed_tile || state.map[new_index2] == closed_tile) && state.closedTiles == false))
 	  {
-		  state.map[index] = empty_tile;  // TODO: Restore original tile
+		  state.map[index] = state.belowBlock1;  // TODO: Restore original tile
+		  
+		  state.belowBlock1 = state.map[new_index1];
+		  state.belowBlock2 = state.map[new_index2];
+		  
 		  state.map[new_index1] = block_tile;
 		  state.map[new_index2] = block_tile;
 
 		  // Update position
 		  state.pos = { point(new_x1, new_y1), point(new_x2, new_y2) };
+		 
 
 		  // Update cost
 		  state.cost = cost(state, heuristic_);
@@ -244,8 +249,15 @@ node sideways_move(node& state, const cost_function cost, heuristic heuristic_, 
 		if ((state.map[new_index1] != closed_tile && state.map[new_index2] != closed_tile) ||
 			((state.map[new_index1] == closed_tile || state.map[new_index2] == closed_tile) && state.closedTiles == false))
 		{
-			std::swap(state.map[index1], state.map[new_index1]);
-			std::swap(state.map[index2], state.map[new_index2]);
+			state.map[index1] = state.belowBlock1;
+			state.belowBlock1 = state.map[new_index1];
+			state.map[new_index1] = block_tile;
+
+			state.map[index2] = state.belowBlock2;
+			state.belowBlock2 = state.map[new_index2];
+			state.map[new_index2] = block_tile;
+
+			
 
 			// Update position
 			state.pos = { point(new_x1, new_y1), point(new_x2, new_y2) };
@@ -314,8 +326,10 @@ node forewards_move(node& state, const cost_function cost, heuristic heuristic_,
 				state.closedTiles = !state.closedTiles;
 			}
 
-			state.map[index1] = empty_tile;  // TODO: Restore original tile
-			state.map[index2] = empty_tile;
+			state.map[index1] = state.belowBlock1;  // TODO: Restore original tile
+			state.map[index2] = state.belowBlock2;
+
+			state.belowBlock1 = state.map[new_index];
 			state.map[new_index] = block_tile;
 
 			// Update position

@@ -38,6 +38,9 @@ class node {
   std::vector<point> pos;
   point target;
 
+  model belowBlock1;
+  model belowBlock2;
+
   std::vector<std::vector<point>> parents = {};
   std::vector<std::string> steps = {};
 
