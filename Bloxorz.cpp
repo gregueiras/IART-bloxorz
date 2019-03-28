@@ -12,14 +12,14 @@
 #define WIN32_LEAN_AND_MEAN
 
 void run(int n, mode mode, heuristic heuristic, int limit, std::string file,
-         std::ostream& os) {
+         std::ostream& os, bool steps) {
   auto lvl = readToLevel(file);
   runner r;
   if (limit == NULL) {
     r =
-        runner(mode, heuristic, lvl.level_map, lvl.num_rows, lvl.num_columns);
+        runner(mode, heuristic, lvl.level_map, lvl.num_rows, lvl.num_columns, steps);
   } else {
-    r = runner(mode, limit, lvl.level_map, lvl.num_rows, lvl.num_columns);
+    r = runner(mode, limit, lvl.level_map, lvl.num_rows, lvl.num_columns, steps);
   }
 
   PROCESS_MEMORY_COUNTERS pmc;
@@ -49,6 +49,6 @@ int main() {
  runnerValues values;
 
    if(firstMenu(values))
-   run(values.getRunTimes(), values.getMode(), values.getHeuristic(), values.getDepth(), values.getFile(), std::cout);
+   run(values.getRunTimes(), values.getMode(), values.getHeuristic(), values.getDepth(), values.getFile(), std::cout, values.getSteps());
   //run(5, iterative, none, 5, "./levels/level1.txt", std::cout);
 }

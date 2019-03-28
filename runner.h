@@ -12,6 +12,7 @@ class runner {
   mode mode_;
   heuristic heuristic_;
   int limit_;
+  bool steps;
 
   cost_function cost_;
 
@@ -25,13 +26,15 @@ class runner {
   long long run(int i, node& node_ret);
 
   runner();
-  runner(mode mode, const std::vector<int>& map, int rows, int cols);
-  runner(mode mode, heuristic heuristic, const std::vector<int>& map, int rows, int cols);
-  runner(mode mode, int limit, const std::vector<int>& map, int rows, int cols);
+  runner(mode mode, const std::vector<int>& map, int rows, int cols, bool steps);
+  runner(mode mode, heuristic heuristic, const std::vector<int>& map, int rows, int cols, bool steps);
+  runner(mode mode, int limit, const std::vector<int>& map, int rows, int cols, bool steps);
   
   ~runner();
 
   int get_nodes_analyzed() const;
+
+
 
 
 };

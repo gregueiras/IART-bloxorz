@@ -14,8 +14,7 @@ node runner::find_solution() {
     this->nodes_analyzed_++;
     auto no = queue.top();
     queue.pop();
-
-   
+	if(this->steps)
 		no.print();
 
     for (auto& op : this->ops_) {
@@ -50,7 +49,6 @@ node runner::find_solution() {
   }
 
   if (!queue.empty()) {
-	//  queue.top().print();
 	return queue.top();
   }
 
@@ -73,7 +71,9 @@ long long runner::run(const int i, node& node_ret) {
 	  catch (std::exception e) {
 		  std::cout << "No solution found! \n";
 	  }
-	  node_ret.print();
+	  if (this->steps)
+		  node_ret.print();
+	  
 	
   }
   const auto end = std::chrono::steady_clock::now();
@@ -93,12 +93,13 @@ runner::runner() {
 }
 
 runner::runner(const mode mode, const std::vector<int>& map, const int rows,
-               const int cols)
+               const int cols, bool steps)
     : runner() {
   this->mode_ = mode;
   this->map_ = map;
   this->cols_ = cols;
   this->rows_ = rows;
+  this->steps = steps;
   switch(mode) {
   case bfs:
   case iterative :
@@ -119,14 +120,14 @@ runner::runner(const mode mode, const std::vector<int>& map, const int rows,
 }
 
 runner::runner(const mode mode, const heuristic heuristic,
-               const std::vector<int>& map, const int rows, const int cols)
-    : runner(mode, map, rows, cols) {
+               const std::vector<int>& map, const int rows, const int cols, bool steps)
+    : runner(mode, map, rows, cols, steps) {
   this->heuristic_ = heuristic;
 }
 
 runner::runner(const mode mode, const int limit,
-               const std::vector<int>& map, const int rows, const int cols)
-    : runner(mode, map, rows, cols) {
+               const std::vector<int>& map, const int rows, const int cols, bool steps)
+    : runner(mode, map, rows, cols, steps) {
   this->limit_ = limit;
 }
 

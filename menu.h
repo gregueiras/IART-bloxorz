@@ -9,6 +9,7 @@ class runnerValues {
 	heuristic heuristic_;
 	int depth;
 	int runTimes;
+	bool steps;
 public : 
 	runnerValues() {
 		this->depth = NULL;
@@ -18,11 +19,13 @@ public :
 	void setHeuristic(int heuristicNumber);
 	void setDepth(int depth);
 	void setRunTimes(int runTimes);
+	void setSteps(bool steps);
 	std::string getFile() { return this->file; };
 	mode getMode() { return this->mode_; };
 	heuristic getHeuristic() { return heuristic_; }
 	int getDepth() { return this->depth; };
 	int getRunTimes() { return this->runTimes; };
+	bool getSteps() { return this->steps;  }
 
 
 };

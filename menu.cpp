@@ -143,8 +143,10 @@ bool firstMenu(runnerValues &values)
 	{
 	case 1:
 		values.setRunTimes(1);
+		values.setSteps(true);
 		return chooseLevelMenu(values);
 	case 2:
+		values.setSteps(false);
 		return chooseNumberRuns(values);
 	case 3:
 		std::cout << "Closing..." << std::endl;
@@ -184,6 +186,10 @@ bool chooseLevelMenu(runnerValues &values)
 		return false;
 	}
 	return chooseAlgorithmMenu(values);
+}
+
+void runnerValues::setSteps(bool steps) {
+	this->steps = steps;
 }
 
 
