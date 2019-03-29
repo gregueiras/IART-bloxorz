@@ -172,7 +172,7 @@ bool chooseLevelMenu(runnerValues &values)
 		<< "3- Level 3" << std::endl
 		<< "4- Level 4" << std::endl
 		<< "5- Level 5" << std::endl
-		<< "6- Level 5" << std::endl
+		<< "6- Level 6" << std::endl
 		<< "7- Quit" << std::endl
 		<< "Select one" << std::endl;
 	int choice = getIntInInterval(1, 7);
@@ -208,7 +208,7 @@ bool chooseAlgorithmMenu(runnerValues &values)
 	{
 	case 1: case 2:
 		values.setMode(choice);
-		break;
+		return true;
 	case 3:
 		values.setMode(choice);
 		return chooseIterativeDepthMenu(values);
@@ -235,10 +235,11 @@ bool chooseHeuristicMenu(runnerValues &values)
 	{
 	case 1: case 2: case 3: case 4:
 		values.setHeuristic(choice);
-		return true;
+		break;
 	case 5:
 		return chooseLevelMenu(values);
 	}
+	return true;
 }
 
 
