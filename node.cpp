@@ -146,3 +146,54 @@ std::ostream &operator<<(std::ostream &os, const node &node) {
   }
   return os;
 }
+
+void node::printPoint() {
+	
+
+	for (std::vector<point> step : this->parents_print) {
+		auto i = 0;
+		bool cond;
+		
+
+		for (auto tile : this->map)
+		{
+			i++;
+			char c;
+			if (step.size() > 1)
+				cond = (i == (step[0].y)*this->cols + (step[0].x+1)) || (i == (step[1].y)*this->cols + (step[1].x+1));
+			else
+				cond = (i == (step[0].y)*this->cols + (step[0].x+1));
+			
+			
+			if (cond)
+				c = 'M';
+			else 
+			{
+				switch (tile)
+				{
+					case empty_tile: c = 'O';  break;
+					case target_tile: c = 'T';  break;
+					case block_tile: c = 'T'; break;
+					case invalid_tile: c = ' '; break;
+					case teletransport_tile_1: case teletransport_tile_2: c = 'S'; break;
+					case teletransport_tile_3: case teletransport_tile_4: c = 'R'; break;
+					case push_tile: c = 'P'; break;
+					case closed_tile:
+						if (this->closedTiles)
+							c = 'C';
+						else
+							c = 'O';
+						break;
+					case door_tile: c = 'D'; break;
+					default: c = 'O';
+				}
+			}
+
+			std::cout << c;
+			if (i % this->cols == 0) std::cout << std::endl;
+		}
+
+		std::cout << std::endl;
+	}
+	this->print();
+}

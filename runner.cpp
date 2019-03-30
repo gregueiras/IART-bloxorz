@@ -14,10 +14,10 @@ node runner::find_solution() {
   while (!queue.empty() && !queue.top().objective()) {
     this->nodes_analyzed_++;
     auto no = queue.top();
+	
     auto old_door_state = no.closedTiles;
     queue.pop();
-	if(this->steps)
-		no.print();
+	
 
     for (auto& op : this->ops_) {
       try {
@@ -47,9 +47,13 @@ node runner::find_solution() {
 
         if (conditions) {
           this->nodes_created_++;
-          if (old_door_state == new_door_state)
-            child.parents.emplace_back(no.pos);
-          queue.emplace(child);
+		  if (old_door_state == new_door_state) {
+			  child.parents.emplace_back(no.pos);
+		  }
+		  child.parents_print.emplace_back(no.pos);
+		  
+		  queue.emplace(child);
+		  
         }
       } catch (...) {
       }
@@ -81,8 +85,10 @@ long long runner::run(const int i, node& node_ret) {
 	  catch (std::exception e) {
 		  std::cout << "No solution found! \n";
 	  }
-	  if (this->steps)
-		  node_ret.print();
+	  if (this->steps) {
+		  node_ret.printPoint();
+	  }
+
 	  
 	
   }
@@ -100,6 +106,7 @@ runner::runner() {
   this->rows_ = 5;
   this->cost_ = inc;
   this->limit_ = -1;
+  
 }
 
 runner::runner(const mode mode, const std::vector<int>& map, const int rows,

@@ -42,6 +42,7 @@ class node {
   model belowBlock2;
 
   std::vector<std::vector<point>> parents = {};
+  std::vector<std::vector<point>> parents_print = {};
   std::vector<std::string> steps = {};
 
   int cols;
@@ -59,6 +60,7 @@ class node {
   bool objective() const;
   void print() const;
   friend std::ostream &operator<<(std::ostream &os, const node &node);
+  void node::printPoint();
 };
 
 int get_index(const int &x, const int &y, const int &cols);

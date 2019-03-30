@@ -324,7 +324,7 @@ node forewards_move(node& state, const cost_function cost, heuristic heuristic_,
 			if (state.map[new_index] == door_tile)
 			{
 				state.closedTiles = !state.closedTiles;
-        state.parents = {};
+				state.parents = {};
 			}
 
 			state.map[index1] = state.belowBlock1;  // TODO: Restore original tile
