@@ -22,7 +22,7 @@ void run(int n, mode mode, heuristic heuristic, int limit, std::string file,
                steps);
   }
 
-  auto res = getPeakRSS();
+  auto res = getCurrentRSS();
   auto res_old = res;
 
   for (auto i = 0; i < n; ++i) {
@@ -30,7 +30,7 @@ void run(int n, mode mode, heuristic heuristic, int limit, std::string file,
     auto sol = r.run(n, node);
 
     res_old = res;
-    res = getPeakRSS();
+    res = getCurrentRSS();
 
     /*
     os << "TIME*" << n << ": " << sol << "\tNODES: " << r.get_nodes_analyzed()
@@ -47,30 +47,34 @@ void run(int n, mode mode, heuristic heuristic, int limit, std::string file,
 }
 
 int main() {
+  while (true) {
   runnerValues values;
 
-  // if(firstMenu(values))
-  // run(values.getRunTimes(), values.getMode(), values.getHeuristic(),
-  // values.getDepth(), values.getFile(), std::cout, values.getSteps());
-
-  heuristic heuristics[] = {distance, manhattan_distance, euclidian_distance,
+  if(firstMenu(values))
+   run(values.getRunTimes(), values.getMode(), values.getHeuristic(),
+   values.getDepth(), values.getFile(), std::cout, values.getSteps());
+  }
+  /*
+ 
+  heuristic heuristics[] = {manhattan_distance, euclidian_distance,
                             manhattan_teletransport_distance,
                             euclidian_teletransport_distance};
 
-  std::string heuristics_names[] = {"distance", "manhattan_distance", "euclidian_distance",
+  std::string heuristics_names[] = {"manhattan_distance", "euclidian_distance",
                             "manhattan_teletransport_distance",
                             "euclidian_teletransport_distance"};
 
   const auto n = 5;
   for (auto level = 3; level <= 6; ++level) {
-    for (auto i = 0; i < 5; ++i) {
+    for (auto i = 0; i < 4; ++i) {
       std::ofstream my_file;
       auto file_name = "./out/greedy+" + heuristics_names[i] + "+" + std::to_string(level) + ".csv";
-      const auto file_level = "./levels/level" + std::to_string(level) + ".txt";
+      const auto file_level = "./Levels/Level" + std::to_string(level) + ".txt";
       std::cout << "Creating " << file_name << std::endl;
 
       my_file.open(file_name);
       run(n, greedy, heuristics[i], NULL, file_level, my_file, false);
+      my_file.flush();
       my_file.close();
 
       file_name = "./out/a_star+" + heuristics_names[i] + "+" + std::to_string(level) + ".csv";
@@ -81,6 +85,6 @@ int main() {
       my_file.close();
     }
   }
-
+   */
   return 0;
 }

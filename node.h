@@ -56,7 +56,6 @@ class node {
   node();
 
   bool operator<(const node &rhs) const;
-  bool operator==(const node &rhs) const;
   bool objective() const;
   void print() const;
   friend std::ostream &operator<<(std::ostream &os, const node &node);

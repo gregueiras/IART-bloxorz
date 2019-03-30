@@ -9,7 +9,7 @@ void runnerValues::setFile(int levelNumber) {
 		this->file = "./levels/level1.txt";
 		break;
 	case 2:
-		this->file = "./levels/level2i.txt";
+		this->file = "./levels/level2.txt";
 		break;
 	case 3:
 		this->file =  "./levels/level3.txt";

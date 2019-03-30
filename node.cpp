@@ -112,7 +112,12 @@ void node::print() const
 	  case teletransport_tile_1: case teletransport_tile_2: c = 'S'; break;
 	  case teletransport_tile_3: case teletransport_tile_4: c = 'R'; break;
 	  case push_tile: c = 'P'; break;
-	  case closed_tile: c = 'C'; break;
+          case closed_tile:
+            if (this->closedTiles)
+              c = 'C';
+            else
+              c = 'O';
+            break;
 	  case door_tile: c = 'D' ; break;
       default: c = 'O';
     }

@@ -14,6 +14,7 @@ node runner::find_solution() {
   while (!queue.empty() && !queue.top().objective()) {
     this->nodes_analyzed_++;
     auto no = queue.top();
+    auto old_door_state = no.closedTiles;
     queue.pop();
 	if(this->steps)
 		no.print();
@@ -23,19 +24,31 @@ node runner::find_solution() {
         auto child = op(no, this->cost_, this->heuristic_);
 
         auto conditions = false;
+        auto new_door_state = child.closedTiles;
+
+        std::vector<point> reverse_pos;
+        for (int i = child.pos.size() - 1; i >= 0; --i)
+        {
+          reverse_pos.push_back(child.pos.at(i));
+        }
 
         if (this->mode_ == iterative) {
           conditions = std::find(no.parents.begin(), no.parents.end(),
                                  child.pos) == no.parents.end() &&
+                       std::find(no.parents.begin(), no.parents.end(),
+                                 reverse_pos) == no.parents.end() &&
                        -child.cost <= this->limit_;
         } else {
           conditions = std::find(no.parents.begin(), no.parents.end(),
-                                 child.pos) == no.parents.end();
+                                 child.pos) == no.parents.end() &&
+                       std::find(no.parents.begin(), no.parents.end(),
+                                 reverse_pos) == no.parents.end();
         }
 
         if (conditions) {
           this->nodes_created_++;
-          child.parents.emplace_back(no.pos);
+          if (old_door_state == new_door_state)
+            child.parents.emplace_back(no.pos);
           queue.emplace(child);
         }
       } catch (...) {
