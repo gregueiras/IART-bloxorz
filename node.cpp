@@ -108,7 +108,7 @@ void node::print() const
       case empty_tile: c = 'O';  break;
       case target_tile: c = 'T';  break;
       case block_tile: c = 'M'; break;
-	  case invalid_tile: c = 'X'; break;
+	  case invalid_tile: c = ' '; break;
 	  case teletransport_tile_1: case teletransport_tile_2: c = 'S'; break;
 	  case teletransport_tile_3: case teletransport_tile_4: c = 'R'; break;
 	  case push_tile: c = 'P'; break;
@@ -120,6 +120,8 @@ void node::print() const
     std::cout << c;
     if (i % this->cols == 0) std::cout << std::endl;
   }
+
+  std::cout << std::endl;
 }
 
 int get_index(const int& x, const int& y, const int &cols)

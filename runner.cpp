@@ -9,6 +9,7 @@ node runner::find_solution() {
   std::priority_queue<node> queue;
   node initial(this->map_, this->rows_, this->cols_);
   queue.push(initial);
+  this->nodes_created_++;
 
   while (!queue.empty() && !queue.top().objective()) {
     this->nodes_analyzed_++;
@@ -33,13 +34,7 @@ node runner::find_solution() {
         }
 
         if (conditions) {
-          /*
-            for (size_t j = 0; j < child.steps.size(); j++)
-            {
-              std::cout << child.steps.at(j) << "  ";
-            }
-            std::cout << "\t" << child.parents.size() << std::endl;
-           */
+          this->nodes_created_++;
           child.parents.emplace_back(no.pos);
           queue.emplace(child);
         }
@@ -52,7 +47,7 @@ node runner::find_solution() {
 	return queue.top();
   }
 
-  throw std::exception("NO MORE NODES");
+  throw std::exception();
 }
 
 //CORRE (2)
@@ -60,6 +55,8 @@ node runner::find_solution() {
 
 long long runner::run(const int i, node& node_ret) {
   this->nodes_analyzed_ = 0;
+  this->nodes_created_ = 0;
+
   const auto begin =
       std::chrono::steady_clock::now();
 
@@ -103,10 +100,10 @@ runner::runner(const mode mode, const std::vector<int>& map, const int rows,
   switch(mode) {
   case bfs:
   case iterative :
-	  this->cost_ = dec;
+	  this->cost_ = inc;
 	  break;
   case dfs:
-	  this->cost_ = inc;
+	  this->cost_ = dec;
 	  break;
   case greedy :
 	  this->cost_ = greedy_;
@@ -135,3 +132,5 @@ runner::~runner() = default;
 
 int runner::get_nodes_analyzed() const
 { return nodes_analyzed_; }
+
+int runner::get_nodes_created() const { return nodes_created_; }

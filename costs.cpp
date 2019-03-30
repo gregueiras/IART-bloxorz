@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <iostream>
+#include <cmath>
 
 
 const double manhattan_distance_aux(const int x1, const int y1, const int x2, const int y2){
@@ -107,7 +108,7 @@ const double heuristic_func(const node &node, heuristic heuristic_)
 	}
 }
 
-double inc(const node &node, heuristic heuristic_) // TEST
+double inc(const node &node, heuristic heuristic_) 
 {
 	return node.cost + 1;
 }

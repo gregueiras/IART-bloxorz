@@ -19,6 +19,7 @@ class runner {
   node find_solution();
 
   int nodes_analyzed_ = 0;
+  int nodes_created_ = 0;
 
  public:
 	 //corre o (2)
@@ -33,8 +34,5 @@ class runner {
   ~runner();
 
   int get_nodes_analyzed() const;
-
-
-
-
+  int get_nodes_created() const;
 };
