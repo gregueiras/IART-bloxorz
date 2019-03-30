@@ -50,9 +50,11 @@ int main() {
   while (true) {
   runnerValues values;
 
-  if(firstMenu(values))
-   run(values.getRunTimes(), values.getMode(), values.getHeuristic(),
-   values.getDepth(), values.getFile(), std::cout, values.getSteps());
+  if (firstMenu(values))
+	  run(values.getRunTimes(), values.getMode(), values.getHeuristic(),
+		  values.getDepth(), values.getFile(), std::cout, values.getSteps());
+  else
+	  return 0;
   }
   /*
  
