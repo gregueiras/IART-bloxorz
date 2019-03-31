@@ -40,8 +40,9 @@ void run(int n, mode mode, heuristic heuristic, int limit, std::string file,
        << std::endl;
     */
 
-    auto nodes = r.get_nodes_created();
-    os << n << " " << sol << " " << nodes << " " << sizeof(node) * nodes << " "
+    auto nodes_c = r.get_nodes_created();
+	auto nodes_a = r.get_nodes_analyzed();
+    os << n << ", " << sol << ", " << nodes_c << ", " << nodes_a << ", " << sizeof(node) * nodes << ", "
        << (res - res_old) << std::endl;
   }
 }
