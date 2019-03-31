@@ -119,10 +119,10 @@ runner::runner(const mode mode, const std::vector<int>& map, const int rows,
   this->steps = steps;
   switch(mode) {
   case bfs:
-  case iterative :
 	  this->cost_ = inc;
 	  break;
   case dfs:
+  case iterative :
 	  this->cost_ = dec;
 	  break;
   case greedy :

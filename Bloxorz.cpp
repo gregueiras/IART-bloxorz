@@ -42,7 +42,7 @@ void run(int n, mode mode, heuristic heuristic, int limit, std::string file,
 
     auto nodes_c = r.get_nodes_created();
 	auto nodes_a = r.get_nodes_analyzed();
-    os << n << ", " << sol << ", " << nodes_c << ", " << nodes_a << ", " << sizeof(node) * nodes << ", "
+    os << n << ", " << sol << ", " << nodes_c << ", " << nodes_a << ", " << sizeof(node) * nodes_c << ", "
        << (res - res_old) << std::endl;
   }
 }
@@ -71,17 +71,14 @@ int main() {
   for (auto level = 1; level <= 6; ++level) {
     std::ofstream my_file;
     std::string file_name;
-    std::string file_level;
-
+    const auto file_level = "./Levels/Level" + std::to_string(level) + ".txt";
+    
     for (auto i = 0; i < 4; ++i) {
-      file_name = "./out/greedy+" + heuristics_names[i] + "+" +
-                  std::to_string(level) + ".csv";
-      file_level = "./Levels/Level" + std::to_string(level) + ".txt";
+      file_name = "./out/greedy+" + heuristics_names[i] + "+" + std::to_string(level) + ".csv";
       
       std::cout << "Creating " << file_name << std::endl;
       my_file.open(file_name);
       run(n, greedy, heuristics[i], NULL, file_level, my_file, false);
-      my_file.flush();
       my_file.close();
 
       file_name = "./out/a_star+" + heuristics_names[i] + "+" +
@@ -106,7 +103,7 @@ int main() {
     my_file.open(file_name);
     run(n, dfs, none, NULL, file_level, my_file, false);
     my_file.close();
-
+    
     file_name = "./out/iterative+" + std::to_string(level) + ".csv";
     std::cout << "Creating " << file_name << std::endl;
 
