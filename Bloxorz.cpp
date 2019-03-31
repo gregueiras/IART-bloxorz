@@ -47,7 +47,8 @@ void run(int n, mode mode, heuristic heuristic, int limit, std::string file,
 }
 
 int main() {
-  while (true) {
+  /*
+   while (true) {
   runnerValues values;
 
   if (firstMenu(values))
@@ -56,37 +57,62 @@ int main() {
   else
 	  return 0;
   }
-  /*
- 
+  */
   heuristic heuristics[] = {manhattan_distance, euclidian_distance,
                             manhattan_teletransport_distance,
                             euclidian_teletransport_distance};
 
   std::string heuristics_names[] = {"manhattan_distance", "euclidian_distance",
-                            "manhattan_teletransport_distance",
-                            "euclidian_teletransport_distance"};
+                                    "manhattan_teletransport_distance",
+                                    "euclidian_teletransport_distance"};
 
-  const auto n = 5;
-  for (auto level = 3; level <= 6; ++level) {
+  const auto n = 50;
+  for (auto level = 1; level <= 6; ++level) {
+    std::ofstream my_file;
+    std::string file_name;
+    std::string file_level;
+
     for (auto i = 0; i < 4; ++i) {
-      std::ofstream my_file;
-      auto file_name = "./out/greedy+" + heuristics_names[i] + "+" + std::to_string(level) + ".csv";
-      const auto file_level = "./Levels/Level" + std::to_string(level) + ".txt";
+      file_name = "./out/greedy+" + heuristics_names[i] + "+" +
+                  std::to_string(level) + ".csv";
+      file_level = "./Levels/Level" + std::to_string(level) + ".txt";
+      
       std::cout << "Creating " << file_name << std::endl;
-
       my_file.open(file_name);
       run(n, greedy, heuristics[i], NULL, file_level, my_file, false);
       my_file.flush();
       my_file.close();
 
-      file_name = "./out/a_star+" + heuristics_names[i] + "+" + std::to_string(level) + ".csv";
-      std::cout << "Creating " << file_name << std::endl;
+      file_name = "./out/a_star+" + heuristics_names[i] + "+" +
+      std::to_string(level) + ".csv"; std::cout << "Creating " << file_name <<
+      std::endl;
 
       my_file.open(file_name);
       run(n, a_star, heuristics[i], NULL, file_level, my_file, false);
       my_file.close();
+      
     }
+    file_name = "./out/bfs+" + std::to_string(level) + ".csv";
+    std::cout << "Creating " << file_name << std::endl;
+
+    my_file.open(file_name);
+    run(n, bfs, none, NULL, file_level, my_file, false);
+    my_file.close();
+
+    file_name = "./out/dfs+" + std::to_string(level) + ".csv";
+    std::cout << "Creating " << file_name << std::endl;
+
+    my_file.open(file_name);
+    run(n, dfs, none, NULL, file_level, my_file, false);
+    my_file.close();
+
+    file_name = "./out/iterative+" + std::to_string(level) + ".csv";
+    std::cout << "Creating " << file_name << std::endl;
+
+    my_file.open(file_name);
+    run(n, iterative, none, 30, file_level, my_file, false);
+    my_file.close();
   }
-   */
+
   return 0;
 }
