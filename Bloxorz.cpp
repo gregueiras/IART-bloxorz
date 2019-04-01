@@ -38,12 +38,13 @@ void run(int n, mode mode, heuristic heuristic, int limit, std::string file,
        << r.get_nodes_analyzed() * sizeof(node) / 1024.0 << " kB"
        << "\tMEMORY MEASURED: " << (res - res_old) / 1024.0 << " kB"
        << std::endl;
-    */
+    
 
   auto nodes_c = r.get_nodes_created();
 	auto nodes_a = r.get_nodes_analyzed();
     os << n << ", " << sol << ", " << nodes_c << ", " << nodes_a << ", " << sizeof(node) * nodes_c << ", "
        << (res - res_old) << std::endl;
+  */
   }
 }
 
@@ -58,16 +59,18 @@ int main() {
   else
 	  return 0;
   }
-  
+                             
+  /*
+	
+  heuristic heuristics[] = {
+    manhattan_distance, euclidian_distance,
+    manhattan_door_distance, euclidian_door_distance,
+    manhattan_teletransport_distance, euclidian_teletransport_distance};
 
-	/*
-  heuristic heuristics[] = {manhattan_distance, euclidian_distance,
-                            manhattan_teletransport_distance,
-                            euclidian_teletransport_distance};
-
-  std::string heuristics_names[] = {"manhattan_distance", "euclidian_distance",
-                                    "manhattan_teletransport_distance",
-                                    "euclidian_teletransport_distance"};
+  std::string heuristics_names[] = { 
+    "manhattan_distance", "euclidian_distance",
+    "manhattan_door_distance", "euclidian_door_distance",
+    "manhattan_teletransport_distance", "euclidian_teletransport_distance"};
 
   const auto n = 50;
   for (auto level = 1; level <= 6; ++level) {
@@ -75,7 +78,7 @@ int main() {
     std::string file_name;
     const auto file_level = "./Levels/Level" + std::to_string(level) + ".txt";
     
-    for (auto i = 0; i < 4; ++i) {
+    for (auto i = 0; i < 2; ++i) {
       file_name = "./out/greedy+" + heuristics_names[i] + "+" + std::to_string(level) + ".csv";
       
       std::cout << "Creating " << file_name << std::endl;
@@ -92,26 +95,6 @@ int main() {
       my_file.close();
       
     }
-    file_name = "./out/bfs+" + std::to_string(level) + ".csv";
-    std::cout << "Creating " << file_name << std::endl;
-
-    my_file.open(file_name);
-    run(n, bfs, none, NULL, file_level, my_file, false);
-    my_file.close();
-
-    file_name = "./out/dfs+" + std::to_string(level) + ".csv";
-    std::cout << "Creating " << file_name << std::endl;
-
-    my_file.open(file_name);
-    run(n, dfs, none, NULL, file_level, my_file, false);
-    my_file.close();
-    
-    file_name = "./out/iterative+" + std::to_string(level) + ".csv";
-    std::cout << "Creating " << file_name << std::endl;
-
-    my_file.open(file_name);
-    run(n, iterative, none, 30, file_level, my_file, false);
-    my_file.close();
   }
 
   return 0;
