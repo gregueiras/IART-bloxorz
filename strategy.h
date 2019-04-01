@@ -16,5 +16,7 @@ enum heuristic
   manhattan_distance,
   euclidian_distance,
   manhattan_teletransport_distance,
-  euclidian_teletransport_distance
+  euclidian_teletransport_distance,
+  manhattan_door_distance,
+  euclidian_door_distance
 };

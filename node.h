@@ -38,6 +38,8 @@ class node {
   std::vector<point> pos;
   point target;
 
+  point door;
+
   model belowBlock1;
   model belowBlock2;
 

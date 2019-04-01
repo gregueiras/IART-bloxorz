@@ -69,6 +69,12 @@ void runnerValues::setHeuristic(int heuristicNumber)
 	case 4:
 		this->heuristic_ = euclidian_teletransport_distance;
 		break;
+	case 5:
+		this->heuristic_ = manhattan_door_distance;
+		break;
+	case 6:
+		this->heuristic_ = euclidian_door_distance;
+		break;
 	default:
 		this->heuristic_ = manhattan_distance;
 		break;
@@ -228,15 +234,17 @@ bool chooseHeuristicMenu(runnerValues &values)
 		<< "2- Euclidian distance" << std::endl
 		<< "3- Manhattan distance with teletransport" << std::endl  
 		<< "4- Euclidian distance with teletransport" << std::endl
-		<< "5- Go back" << std::endl
+		<< "5- Manhattan distance with door" << std::endl
+		<< "6- Euclidian distance with door" << std::endl
+		<< "7- Go back" << std::endl
 		<< "Select one" << std::endl;
-	int choice = getIntInInterval(1, 5);
+	int choice = getIntInInterval(1, 7);
 	switch (choice)
 	{
-	case 1: case 2: case 3: case 4:
+	case 1: case 2: case 3: case 4: case 5: case 6:
 		values.setHeuristic(choice);
 		break;
-	case 5:
+	case 7:
 		return chooseLevelMenu(values);
 	}
 	return true;
