@@ -15,6 +15,8 @@ node::node(const std::vector<int> &initializer, const int &rows, const int &cols
   this->belowBlock1 = empty_tile;
   this->belowBlock2 = empty_tile;
 
+  this->door = point(-1, -1);
+
   const int length = initializer.size();
   if (length != rows * cols)
   {
@@ -73,6 +75,7 @@ node::node(const std::vector<int> &initializer, const int &rows, const int &cols
 	}
 	else if (elem == door_tile)
 	{
+		this->door = p;
 		this->map.emplace_back(door_tile);
 	}
   }

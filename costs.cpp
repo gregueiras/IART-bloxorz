@@ -88,7 +88,23 @@ const double heuristic_teletransport_euclidian_distance(const node &node) {
 }
 
 
-//TODO devia atirar uma excepçao no caso de default provavelmente
+const double heuristic_door_distance_aux(const node &node, distance_aux_function distance_function) {
+	if (node.closedTiles && node.door.x != -1 && node.door.y != -1)
+		return heuristic_distance_aux(node, node.door, distance_function);
+	else
+		return heuristic_distance_aux(node, node.target, distance_function);
+}
+
+
+const double heuristic_door_manhattan_distance(const node &node) {
+	return heuristic_door_distance_aux(node, manhattan_distance_aux);
+}
+
+const double heuristic_door_euclidian_distance(const node &node) {
+	return heuristic_door_distance_aux(node, euclidian_distance_aux);
+}
+
+
 const double heuristic_func(const node &node, heuristic heuristic_)
 {
 	switch (heuristic_)
@@ -103,6 +119,10 @@ const double heuristic_func(const node &node, heuristic heuristic_)
 		return heuristic_teletransport_manhattan_distance(node);
 	case euclidian_teletransport_distance:
 		return heuristic_teletransport_euclidian_distance(node);
+	case manhattan_door_distance:
+		return heuristic_door_manhattan_distance(node);
+	case euclidian_door_distance :
+		return heuristic_door_euclidian_distance(node);
 	default:
 		throw std::invalid_argument("invalid heuristic");
 	}

@@ -40,15 +40,15 @@ void run(int n, mode mode, heuristic heuristic, int limit, std::string file,
        << std::endl;
     */
 
-    auto nodes_c = r.get_nodes_created();
+   /* auto nodes_c = r.get_nodes_created();
 	auto nodes_a = r.get_nodes_analyzed();
     os << n << ", " << sol << ", " << nodes_c << ", " << nodes_a << ", " << sizeof(node) * nodes << ", "
-       << (res - res_old) << std::endl;
+       << (res - res_old) << std::endl;*/
   }
 }
 
 int main() {
-  /*
+  
    while (true) {
   runnerValues values;
 
@@ -58,7 +58,9 @@ int main() {
   else
 	  return 0;
   }
-  */
+  
+
+	/*
   heuristic heuristics[] = {manhattan_distance, euclidian_distance,
                             manhattan_teletransport_distance,
                             euclidian_teletransport_distance};
@@ -113,7 +115,7 @@ int main() {
     my_file.open(file_name);
     run(n, iterative, none, 30, file_level, my_file, false);
     my_file.close();
-  }
+  }*/
 
   return 0;
 }
