@@ -151,11 +151,13 @@ std::ostream &operator<<(std::ostream &os, const node &node) {
 }
 
 void node::printPoint() {
-	
+	bool doors = true;
 
 	for (std::vector<point> step : this->parents_print) {
 		auto i = 0;
 		bool cond;
+		if (step.size() == 1 && step.at(0).x == this->door.x && step.at(0).y == this->door.y)
+			doors = false;
 		
 
 		for (auto tile : this->map)
@@ -182,7 +184,7 @@ void node::printPoint() {
 					case teletransport_tile_3: case teletransport_tile_4: c = 'R'; break;
 					case push_tile: c = 'P'; break;
 					case closed_tile:
-						if (this->closedTiles)
+						if (doors)
 							c = 'C';
 						else
 							c = 'O';
