@@ -20,11 +20,13 @@ class runner {
 
   int nodes_analyzed_ = 0;
   int nodes_created_ = 0;
+  int solution_size_ = 0;
 
  public:
 	 //corre o (2)
 	// node run();
   long long run(int i, node& node_ret);
+  int get_solution_size() const;
 
   runner();
   runner(mode mode, const std::vector<int>& map, int rows, int cols, bool steps);

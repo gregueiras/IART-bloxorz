@@ -3,6 +3,7 @@
 #include "levels.h"
 #include <chrono>
 #include <iostream>
+#include <objidlbase.h>
 
 
 node runner::find_solution() {
@@ -61,18 +62,18 @@ node runner::find_solution() {
   }
 
   if (!queue.empty()) {
-	return queue.top();
+    auto solution = queue.top();
+    this->solution_size_ += solution.steps.size();
+	  return solution;
   }
 
   throw std::exception();
 }
 
-//CORRE (2)
-//node runner::run() { return find_solution(true, NULL); }
-
 long long runner::run(const int i, node& node_ret) {
   this->nodes_analyzed_ = 0;
   this->nodes_created_ = 0;
+  this->solution_size_ = 0;
 
   const auto begin =
       std::chrono::steady_clock::now();
@@ -154,3 +155,5 @@ int runner::get_nodes_analyzed() const
 { return nodes_analyzed_; }
 
 int runner::get_nodes_created() const { return nodes_created_; }
+
+int runner::get_solution_size() const { return this->solution_size_; }
